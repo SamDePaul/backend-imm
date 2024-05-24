@@ -2,6 +2,11 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use App\Controllers\IndicatorController;
+use App\Controllers\MatrikController;
+use App\Controllers\sdgController;
+
+
 
 /*
 |--------------------------------------------------------------------------
@@ -21,3 +26,9 @@ Route::middleware('auth:api')->get('/users', function (Request $request) {
 Route::post('login', 'FrontendAuthController@login');
 Route::post('register', 'FrontendRegisterController@register');
 
+Route::get('/matrik', 'MatrikController@getMatrik')->name('matrik');
+Route::get('/indicator', 'IndicatorController@getIndicators')->name('sdg');
+Route::get('/sdg', 'sdgController@getSdg')->name('sdg');
+
+Route::get('/bootcamps', 'bootcampController@getAllBootcamps');
+Route::get('/bootcamps/{id}', 'bootcampController@getBootcamp');

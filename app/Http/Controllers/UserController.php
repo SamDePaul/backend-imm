@@ -36,6 +36,8 @@ class UserController extends Controller
             'alamat' => 'required|string|max:255',
         ]);
 
+        $User = new User;
+
         User::create([
             'nama_lengkap' => $request->nama_lengkap,
             'nik' => $request->nik,
