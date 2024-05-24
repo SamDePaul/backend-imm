@@ -15,6 +15,11 @@ class CreateBootcampsTable extends Migration
     {
         Schema::create('bootcamps', function (Blueprint $table) {
             $table->id();
+            $table->string('judul');
+            $table->string('deskripsi');
+            $table->dateTime('tanggal');
+            $table->string('harga');
+            $table->string('poster_path');
             $table->timestamps();
         });
     }

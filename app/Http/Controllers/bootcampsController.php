@@ -3,8 +3,9 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Bootcamp;
 
-class bootcampController extends Controller
+class bootcampsController extends Controller
 {
     public function index(Request $request)
     {

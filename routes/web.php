@@ -35,7 +35,7 @@ Route::get('/blog', 'PostController@index')->name('blog');
 
 
 Route::resource('users', 'UserController');
-Route::resource('events', 'EventController');
+Route::resource('bootcamps', 'BootcampsController');
 
 
 

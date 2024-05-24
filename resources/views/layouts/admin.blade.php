@@ -69,11 +69,11 @@
             </a>
         </li>
 
-        <!-- Nav Item - Event -->
-        <li class="nav-item {{ Nav::isRoute('events.index') }}">
-            <a class="nav-link" href="{{ route('events.index') }}">
+        <!-- Nav Item - Bootcamp -->
+        <li class="nav-item {{ Nav::isRoute('bootcamps.index') }}">
+            <a class="nav-link" href="{{ route('bootcamps.index') }}">
                 <i class="fa-solid fa-calendar-days"></i>
-                <span>{{ __('Event') }}</span>
+                <span>{{ __('Bootcamp') }}</span>
             </a>
         </li>
 
