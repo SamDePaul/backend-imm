@@ -13,10 +13,11 @@
         <thead>
         <tr>
             <th>ID</th>
+            <th>Cover</th>
             <th>Title</th>
             <th>Description</th>
             <th>Date</th>
-            <th>Speaker</th>
+            <th>Price</th>
             <th>Actions</th>
         </tr>
         </thead>
@@ -24,9 +25,15 @@
         @foreach($projects as $project)
             <tr>
                 <td>{{ $project->id }}</td>
+                <td class="text-center align-middle">
+                    @if($project->poster_path)
+                        <img src="{{ asset('storage/' . $project->poster_path) }}" alt="Event Poster" style="max-width: 250px;">
+                    @endif
+                </td>
                 <td>{{ $project->judul }}</td>
                 <td>{{ $project->deskripsi }}</td>
                 <td>{{ $project->tanggal }}</td>
+                <td>{{ 'Rp ' . number_format($project->harga, 0, ',', '.') }}</td>
                 <td>
                     <a href="{{ route('projects.edit', $project->id) }}" class="btn btn-warning">Edit</a>
                     <button type="button" class="btn btn-danger delete-project" data-project-id="{{ $project->id }}" data-toggle="modal" data-target="#deleteEventModal-{{ $project->id }}">Delete</button>
