@@ -17,6 +17,9 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('/auth/login') ;
 });
+Route::resource('Countries', 'CountriesController');
+Route::resource('users', 'UserController');
+Route::resource('projects', 'ProjectsController');
 
 Auth::routes();
 
@@ -34,8 +37,6 @@ Route::get('/blog', 'PostController@index')->name('blog');
 
 
 
-Route::resource('users', 'UserController');
-Route::resource('bootcamps', 'BootcampsController');
 
 
 

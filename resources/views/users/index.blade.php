@@ -15,19 +15,22 @@
         <thead>
         <tr>
             <th>ID</th>
-            <th>Name</th>
-            <th>Last Name</th>
+            <th>Name Lengkap</th>
+            <th>NIK</th>
             <th>Email</th>
-            <th>Actions</th>
+            <th>Negara</th>
+            <th>No Whatsapp</th>
         </tr>
         </thead>
         <tbody>
         @foreach($users as $user)
             <tr>
                 <td>{{ $user->id }}</td>
-                <td>{{ $user->name }}</td>
-                <td>{{ $user->last_name }}</td>
+                <td>{{ $user->nama_lengkap }}</td>
+                <td>{{ $user->nik }}</td>
                 <td>{{ $user->email }}</td>
+                <td>{{ $user->negara }}</td>
+                <td>{{ $user->no_hp }}</td>
                 <td>
                     <a href="{{ route('users.edit', $user->id) }}" class="btn btn-warning">Edit</a>
                     <button type="button" class="btn btn-danger delete-user" data-user-id="{{ $user->id }}" data-toggle="modal" data-target="#deleteUserModal-{{ $user->id }}">Delete</button>

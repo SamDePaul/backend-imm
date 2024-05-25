@@ -37,7 +37,7 @@
         <!-- Sidebar - Brand -->
         <a class="sidebar-brand d-flex align-items-center justify-content-center" href="{{ route('home') }}">
             <div class="sidebar-brand-icon">
-                <img src="{{ asset('img/Dashboard-ico.png') }}" alt="TBN Logo">
+                <h1>IMM CMS</h1>
             </div>
 {{--            <div class="sidebar-brand-text mx-3">SB Admin <sup>2</sup></div>--}}
         </a>
@@ -69,11 +69,11 @@
             </a>
         </li>
 
-        <!-- Nav Item - Bootcamp -->
-        <li class="nav-item {{ Nav::isRoute('bootcamps.index') }}">
-            <a class="nav-link" href="{{ route('bootcamps.index') }}">
+        <!-- Nav Item - Project -->
+        <li class="nav-item {{ Nav::isRoute('projects.index') }}">
+            <a class="nav-link" href="{{ route('projects.index') }}">
                 <i class="fa-solid fa-calendar-days"></i>
-                <span>{{ __('Bootcamp') }}</span>
+                <span>{{ __('Project') }}</span>
             </a>
         </li>
 

@@ -9,27 +9,45 @@
             @method('PUT')
         @endif
         <div class="form-group">
-            <label for="name">Name</label>
-            <input type="text" class="form-control" id="name" name="name" value="{{ old('name', $user->name) }}" required>
+            <label for="nama_lengkap">Name Lengkap</label>
+            <input type="text" class="form-control" id="nama_lengkap" name="nama_lengkap" value="{{ old('nama_lengkap', $user->nama_lengkap) }}" required>
         </div>
         <div class="form-group">
-            <label for="last_name">Last Name</label>
-            <input type="text" class="form-control" id="last_name" name="last_name" value="{{ old('last_name', $user->last_name) }}" required>
+            <label for="nik">NIK</label>
+            <input type="text" class="form-control" id="nik" name="nik" value="{{ old('nik', $user->nik) }}" required>
         </div>
         <div class="form-group">
             <label for="email">Email</label>
             <input type="email" class="form-control" id="email" name="email" value="{{ old('email', $user->email) }}" required>
         </div>
-        @unless($user->exists)
-            <div class="form-group">
-                <label for="password">Password</label>
-                <input type="password" class="form-control" id="password" name="password" required>
-            </div>
-            <div class="form-group">
-                <label for="password_confirmation">Confirm Password</label>
-                <input type="password" class="form-control" id="password_confirmation" name="password_confirmation" required>
-            </div>
-        @endunless
+        <div class="form-group">
+            <label for="password">Password</label>
+               <input type="password" class="form-control" id="password" name="password" required>
+        </div>
+        <div class="form-group">
+            <label for="password_confirmation">Confirm Password</label>
+            <input type="password" class="form-control" id="password_confirmation" name="password_confirmation" required>
+        </div>
+        <div class="form-group">
+            <label for="no_hp">No Whatsapp</label>
+            <input type="no_hp" class="form-control" id="no_hp" name="no_hp" value="{{ old('no_hp', $user->no_hp) }}" required>
+        </div>
+        <div class="form-group">
+            <select name="negara" id="negara" class="form-control" required>
+                <option value="{{ old('negara', $user->negara)}}">{{ $user->negara}}</option>
+                @foreach($countries as $country)
+                    <option value="{{ $country->name }}">{{ $country->name }}</option>
+                @endforeach
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="provinsi">Provinsi</label>
+            <input type="provinsi" class="form-control" id="provinsi" name="provinsi" value="{{ old('provinsi', $user->provinsi) }}" required>
+        </div>
+        <div class="form-group">
+            <label for="alamat">Alamat</label>
+            <input type="alamat" class="form-control" id="alamat" name="alamat" value="{{ old('alamat', $user->alamat) }}" required>
+        </div>
         <div class="d-flex align-items-center">
             <button type="submit" class="btn btn-primary mr-3">
                 {{ $user->exists ? __('Update User') : __('Create User') }}

@@ -3,22 +3,35 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
+use App\Models\Country;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $users = User::where('role', 'users')->get();
+        $search = $request->input('search');
+
+        $users = User::query()
+            ->where('role', 'users') // Filter by user role first
+            ->when($search, function ($query) use ($search) {
+                return $query->where(function ($query) use ($search) {
+                    $query->where('nama_lengkap', 'like', "%{$search}%")
+                        ->orWhere('nik', 'like', "%{$search}%")
+                        ->orWhere('email', 'like', "%{$search}%");
+                });
+            })
+            ->paginate(10);
+
         return view('users.index', compact('users'));
     }
 
     public function create()
     {
         $user = new User(); // Create a new User instance
-
-        return view('users.create', compact('user'));
+        $countries = Country::all();
+        return view('users.create', compact('user', 'countries'));
     }
 
 
@@ -61,7 +74,8 @@ class UserController extends Controller
     public function edit($id)
     {
         $user = User::findOrFail($id);
-        return view('users.edit', compact('user'));
+        $countries = Country::all();
+        return view('users.edit', compact('user', 'countries'));
     }
 
     public function update(Request $request, $id)
@@ -78,7 +92,20 @@ class UserController extends Controller
         ]);
 
         $user = User::findOrFail($id);
-        $user->update($request->all());
+        $user->nama_lengkap = $request->nama_lengkap;
+        $user->nik = $request->nik;
+        $user->email = $request->email;
+        $user->no_hp = $request->no_hp;
+        $user->negara = $request->negara;
+        $user->provinsi = $request->provinsi;
+        $user->alamat = $request->alamat;
+
+         // Check if a new password has been provided
+        if ($request->filled('password')) {
+            $user->password = $request->password;
+        }
+
+        $user->save();
 
         return redirect()->route('users.index')->with('success', 'User updated successfully.');
     }

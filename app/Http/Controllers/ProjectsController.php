@@ -3,15 +3,17 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\Bootcamp;
+use App\Models\Project;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Http\RedirectResponse;
 
-class bootcampsController extends Controller
+class projectsController extends Controller
 {
     public function index(Request $request)
     {
         $search = $request->input('search');
 
-        $bootcamps = Bootcamp::query()
+        $projects = Project::query()
             ->when($search, function ($query) use ($search) {
                 return $query->where('judul', 'like', "%$search%")
                     ->orWhere('deskripsi', 'like', "%$search%")
@@ -19,13 +21,13 @@ class bootcampsController extends Controller
             })
             ->paginate(10);
 
-        return view('bootcamps.index', compact('bootcamps'));
+        return view('projects.index', compact('projects'));
 
     }
 
     public function create()
     {
-        return view('bootcamps.create');
+        return view('projects.create');
     }
 
     public function store(Request $request): RedirectResponse
@@ -40,7 +42,7 @@ class bootcampsController extends Controller
 
         $posterPath = $request->file('poster_path')->store('public/posters');
 
-        Bootcamp::create([
+        Project::create([
             'judul' => $request->judul,
             'deskripsi' => $request->deskripsi,
             'tanggal' => $request->tanggal,
@@ -48,19 +50,19 @@ class bootcampsController extends Controller
             'harga' => $request->harga,
         ]);
 
-        return redirect()->route('bootcamps.index')->with('success', 'Bootcamp created successfully.');
+        return redirect()->route('projects.index')->with('success', 'Project created successfully.');
     }
 
     public function show($id)
     {
-        $bootcamp = Bootcamp::findOrFail($id);
-        return view('bootcamps.show', compact('bootcamp'));
+        $project = Project::findOrFail($id);
+        return view('projects.show', compact('project'));
     }
 
     public function edit($id)
     {
-        $bootcamp = Bootcamp::findOrFail($id);
-        return view('bootcamps.edit', compact('bootcamp'));
+        $project = Project::findOrFail($id);
+        return view('projects.edit', compact('project'));
     }
 
     public function update(Request $request, $id)
@@ -74,60 +76,60 @@ class bootcampsController extends Controller
             'harga' => 'required|string|max:255',
         ]);
 
-        $bootcamp = Bootcamp::findOrFail($id);
+        $project = Project::findOrFail($id);
 
         if ($request->hasFile('poster_path')) {
             // Delete the old image if it exists
-            if ($bootcamp->poster_path) {
-                Storage::delete('public/' . $bootcamp->poster_path);
+            if ($project->poster_path) {
+                Storage::delete('public/' . $project->poster_path);
             }
 
             // Store the new image
             $posterPath = $request->file('poster_path')->store('public/posters');
-            $bootcamp->poster_path = str_replace('public/', '', $posterPath);
+            $project->poster_path = str_replace('public/', '', $posterPath);
         }
 
-        $bootcamp->update([
+        $project->update([
             'judul' => $request->judul,
             'deskripsi' => $request->deskripsi,
             'tanggal' => $request->tanggal,
             'harga' => $request->harga,
         ]);
 
-        return redirect()->route('bootcamps.index')->with('success', 'Bootcamp updated successfully.');
+        return redirect()->route('projects.index')->with('success', 'Project updated successfully.');
     }
 
 
     public function destroy($id)
     {
-        $bootcamp = Bootcamp::findOrFail($id);
+        $project = Project::findOrFail($id);
 
-        // Delete the image associated with the bootcamp
-        if ($bootcamp->poster_path) {
-            Storage::delete('public/' . $bootcamp->poster_path);
+        // Delete the image associated with the project
+        if ($project->poster_path) {
+            Storage::delete('public/' . $project->poster_path);
         }
 
-        // Delete the bootcamp from the database
-        $bootcamp->delete();
+        // Delete the project from the database
+        $project->delete();
 
-        return redirect()->route('bootcamps.index')->with('success', 'Bootcamp deleted successfully.');
+        return redirect()->route('projects.index')->with('success', 'Project deleted successfully.');
     }
 
-    public function getAllBootcamps()
+    public function getAllProjects()
     {
-        $bootcamps = Bootcamp::all();
+        $projects = Project::all();
 
         return response()->json([
-            'bootcamps' => $bootcamps,
+            'projects' => $projects,
         ]);
     }
 
-    public function getBootcamp($id)
+    public function getProject($id)
     {
-        $bootcamp = Bootcamp::findOrFail($id);
+        $project = Project::findOrFail($id);
 
         return response()->json([
-            'bootcamp' => $bootcamp,
+            'project' => $project,
         ]);
     }
 }
