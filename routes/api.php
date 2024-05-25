@@ -30,5 +30,6 @@ Route::get('/matrik', 'MatrikController@getMatrik')->name('matrik');
 Route::get('/indicator', 'IndicatorController@getIndicators')->name('sdg');
 Route::get('/sdg', 'sdgController@getSdg')->name('sdg');
 
-Route::get('/bootcamps', 'bootcampController@getAllBootcamps');
-Route::get('/bootcamps/{id}', 'bootcampController@getBootcamp');
+Route::get('/projects', 'ProjectsController@getAllProjects');
+Route::get('/projects/{id}', 'ProjectsController@getProject');
+

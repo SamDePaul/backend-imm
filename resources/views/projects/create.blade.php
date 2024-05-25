@@ -1,9 +1,9 @@
 @extends('layouts.admin')
 
 @section('main-content')
-    <h1 class="h3 mb-4 text-gray-800">{{ __('Create Bootcamp') }}</h1>
+    <h1 class="h3 mb-4 text-gray-800">{{ __('Create Project') }}</h1>
 
-    <form action="{{ route('bootcamps.store') }}" method="POST" enctype="multipart/form-data">
+    <form action="{{ route('projects.store') }}" method="POST" enctype="multipart/form-data">
         @csrf
         <div class="form-group">
             <label for="judul">Title</label>
@@ -18,12 +18,16 @@
             <input type="datetime-local" class="form-control" id="tanggal" name="tanggal" value="{{ old('tanggal') }}" required>
         </div>
         <div class="form-group">
+            <label for="harga">Price (Rp)</label>
+            <input type="text" onkeypress="return event.charCode >= 48 && event.charCode <= 57" class="form-control" id="harga" name="harga" value="{{ old('harga') }}" required>
+        </div>
+        <div class="form-group">
             <label for="poster_path">Poster</label>
             <input type="file" class="form-control-file" id="poster_path" name="poster_path" accept="image/*" required>
         </div>
         <div class="d-flex align-items-center">
-            <button type="submit" class="btn btn-primary mr-3">{{ __('Create Bootcamp') }}</button>
-            <a href="{{ route('bootcamps.index') }}" class="btn btn-secondary">{{ __('Back to Bootcamps') }}</a>
+            <button type="submit" class="btn btn-primary mr-3">{{ __('Create Project') }}</button>
+            <a href="{{ route('projects.index') }}" class="btn btn-secondary">{{ __('Back to Projects') }}</a>
         </div>
     </form>
 @endsection

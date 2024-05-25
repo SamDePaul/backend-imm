@@ -24,7 +24,7 @@ class CreateUsersTable extends Migration
             $table->string('provinsi');
             $table->string('alamat');
             $table->string('no_hp');
-            $table->string('role');
+            $table->string('role')->default('users');
             $table->rememberToken();
             $table->timestamps();
 
