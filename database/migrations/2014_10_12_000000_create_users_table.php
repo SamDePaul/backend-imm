@@ -22,6 +22,7 @@ class CreateUsersTable extends Migration
             $table->string('password');
             $table->string('negara');
             $table->string('provinsi');
+            $table->string('kota');
             $table->string('alamat');
             $table->string('no_hp');
             $table->string('role')->default('users');
