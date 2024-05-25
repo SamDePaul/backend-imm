@@ -71,7 +71,6 @@ class projectsController extends Controller
             'judul' => 'required|string|max:255',
             'deskripsi' => 'required|string',
             'tanggal' => 'required|date',
-            'pembicara' => 'required|string|max:255',
             'poster_path' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
             'harga' => 'required|string|max:255',
         ]);

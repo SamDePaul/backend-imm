@@ -21,8 +21,8 @@
             <input type="datetime-local" class="form-control" id="tanggal" name="tanggal" value="{{ old('tanggal', \Carbon\Carbon::parse($project->tanggal)->format('Y-m-d\TH:i')) }}" required>
         </div>
         <div class="form-group">
-            <label for="pembicara">Speaker</label>
-            <input type="text" class="form-control" id="pembicara" name="pembicara" value="{{ old('pembicara', $project->pembicara) }}" required>
+            <label for="harga">Price (Rp)</label>
+            <input type="text" onkeypress="return event.charCode >= 48 && event.charCode <= 57" class="form-control" id="harga" name="harga" value="{{ old('harga', $project->harga) }}" required>
         </div>
         <div class="form-group">
             <label for="poster_path">Poster</label>

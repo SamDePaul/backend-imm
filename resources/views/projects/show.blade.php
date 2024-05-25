@@ -16,6 +16,7 @@
             <p><strong>Title:</strong> {{ $project->judul }}</p>
             <p><strong>Description:</strong> {{ $project->deskripsi }}</p>
             <p><strong>Date:</strong> {{ \Carbon\Carbon::parse($project->tanggal)->format('d M Y, H:i') }}</p>
+            <p><strong>Price:</strong> {{ 'Rp ' . number_format($project->harga, 0, ',', '.') }}</p>
             <p><strong>Created At:</strong> {{ $project->created_at }}</p>
             <p><strong>Updated At:</strong> {{ $project->updated_at }}</p>
         </div>
