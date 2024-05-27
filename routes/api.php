@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Controllers\IndicatorController;
 use App\Controllers\MatrikController;
 use App\Controllers\sdgController;
+use App\Controllers\immProfileController;
 
 
 
@@ -33,3 +34,4 @@ Route::get('/sdg', 'sdgController@getSdg')->name('sdg');
 Route::get('/projects', 'ProjectsController@getAllProjects');
 Route::get('/projects/{id}', 'ProjectsController@getProject');
 
+Route::post('/verifikasi', 'immProfileController@sendVerificationCode');
