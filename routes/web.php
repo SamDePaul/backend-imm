@@ -34,7 +34,8 @@ Route::get('/about', function () {
 
 Route::get('/blog', 'PostController@index')->name('blog');
 
-
+Route::get('/get-regions/{country_id}', 'ProvinceController@getRegions');
+Route::get('/get-cities/{region_id}', 'ProvinceController@getCities');
 
 
 

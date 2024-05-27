@@ -36,16 +36,25 @@
             <input type="no_hp" class="form-control" id="no_hp" name="no_hp" value="{{ old('no_hp', $user->no_hp) }}" required>
         </div>
         <div class="form-group">
+            <label for="negara">Negara</label>
             <select name="negara" id="negara" class="form-control" required>
                 <option value=""></option>
                 @foreach($countries as $country)
-                    <option value="{{ $country->name }}">{{ $country->name }}</option>
+                    <option value="{{ $country->id }}">{{ $country->name }}</option>
                 @endforeach
             </select>
         </div>
         <div class="form-group">
-            <label for="provinsi">Provinsi</label>
-            <input type="provinsi" class="form-control" id="provinsi" name="provinsi" value="{{ old('provinsi', $user->provinsi) }}" required>
+            <label for="provinsi">Region</label>
+            <select name="provinsi" id="provinsi" class="form-control" required disabled>
+                <option value="">Pilih Negara Terlebih Dahulu</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="kota">City</label>
+            <select name="kota" id="kota" class="form-control" required disabled>
+                <option value="">Pilih Region Terlebih Dahulu</option>
+            </select>
         </div>
         <div class="form-group">
             <label for="alamat">Alamat</label>
