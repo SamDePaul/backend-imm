@@ -85,13 +85,38 @@
             </a>
         </li>
 
-        <!-- Nav Item - Blog -->
+        <!-- Nav Item - sdgs -->
         <li class="nav-item {{ Nav::isRoute('sdgs.index') }}">
             <a class="nav-link" href="{{ route('sdgs.index') }}">
                 <i class="fa-solid fa-globe"></i>
                 <span>{{ __('SDG') }}</span>
             </a>
         </li>
+        
+        <!-- Nav Item - indicators -->
+        <li class="nav-item {{ Nav::isRoute('indicators.index') }}">
+            <a class="nav-link" href="{{ route('indicators.index') }}">
+                <i class="fa-solid fa-globe"></i>
+                <span>{{ __('Indicators') }}</span>
+            </a>
+        </li>
+
+        <!-- Nav Item - tags -->
+        <li class="nav-item {{ Nav::isRoute('tags.index') }}">
+            <a class="nav-link" href="{{ route('tags.index') }}">
+                <i class="fa-solid fa-globe"></i>
+                <span>{{ __('Tags') }}</span>
+            </a>
+        </li>
+
+        <!-- Nav Item - companies -->
+        <li class="nav-item {{ Nav::isRoute('companies.index') }}">
+            <a class="nav-link" href="{{ route('companies.index') }}">
+                <i class="fa-solid fa-globe"></i>
+                <span>{{ __('Companies') }}</span>
+            </a>
+        </li>
+
         <!-- Nav Item - About -->
         <li class="nav-item {{ Nav::isRoute('about') }}">
             <a class="nav-link" href="{{ route('about') }}">

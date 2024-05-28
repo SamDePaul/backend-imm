@@ -21,6 +21,9 @@ Route::resource('Countries', 'CountriesController');
 Route::resource('users', 'UserController');
 Route::resource('projects', 'ProjectsController');
 Route::resource('sdgs', 'sdgController');
+Route::resource('indicators', 'IndicatorController');
+Route::resource('tags', 'TagController');
+Route::resource('companies', 'CompanyController');
 
 Auth::routes();
 

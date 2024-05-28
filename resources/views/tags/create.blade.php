@@ -1,10 +1,14 @@
 @extends('layouts.admin')
 
 @section('main-content')
-    <h1 class="h3 mb-4 text-gray-800">{{ __('Add SDG') }}</h1>
+    <h1 class="h3 mb-4 text-gray-800">{{ __('Add Tag') }}</h1>
 
-    <form action="{{ route('sdgs.store') }}" method="POST">
+    <form action="{{ route('tags.store') }}" method="POST">
         @csrf
+        <div class="form-group">
+            <label for="slug">Slug:</label>
+            <input type="text" class="form-control" id="slug" name="slug" required>
+        </div>
         <div class="form-group">
             <label for="name">Name:</label>
             <input type="text" class="form-control" id="name" name="name" required>
