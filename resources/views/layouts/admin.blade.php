@@ -309,7 +309,11 @@
         <footer class="sticky-footer bg-white">
             <div class="container my-auto">
                 <div class="copyright text-center my-auto">
+<<<<<<< Updated upstream
                     <span>Copyright &copy; <a href="https://github.com/SamDePaul/backend-imm" target="_blank">IMM</a> {{ now()->year }}</span>
+=======
+                    <span>Copyright &copy; <a href="https://github.com/SamDePaul" target="_blank">SamDePaul</a> {{ now()->year }}</span>
+>>>>>>> Stashed changes
                 </div>
             </div>
         </footer>
