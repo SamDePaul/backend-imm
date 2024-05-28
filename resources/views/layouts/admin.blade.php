@@ -78,9 +78,9 @@
         </li>
 
         <!-- Nav Item - Blog -->
-        <li class="nav-item {{ Nav::isRoute('blog') }}">
-            <a class="nav-link" href="{{ route('blog') }}">
-                <i class="fas fa-fw fa-book"></i>
+        <li class="nav-item {{ Nav::isRoute('blogs.index') }}">
+            <a class="nav-link" href="{{ route('blogs.index') }}">
+                <i class="fas fa-fw fa-blog"></i>
                 <span>{{ __('Blog') }}</span>
             </a>
         </li>

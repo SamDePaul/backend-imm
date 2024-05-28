@@ -39,32 +39,37 @@ class UserController extends Controller
 
     public function store(Request $request)
     {
-        $request->validate([
-            'nama_lengkap' => 'required|string|max:255',
-            'nik' => 'required|string|min:16|max:16',
-            'email' => 'required|string|email|max:255|unique:users',
-            'password' => 'required|string|min:8|confirmed',
-            'no_hp' => 'required|string|min:10|max:13',
-            'negara' => 'required|string|max:255',
-            'provinsi' => 'required|string|max:255',
-            'alamat' => 'required|string|max:255',
-        ]);
-
-        $User = new User;
-
-        User::create([
-            'nama_lengkap' => $request->nama_lengkap,
-            'nik' => $request->nik,
-            'email' => $request->email,
-            'password' => $request->password,
-            'no_hp' => $request->no_hp,
-            'negara' => $request->negara,
-            'provinsi' => $request->provinsi,
-            'alamat' => $request->alamat,
-        ]);
-
-        return redirect()->route('users.index')->with('success', 'User created successfully.');
+        try {
+            $request->validate([
+                'nama_lengkap' => 'required|string|max:255',
+                'nik' => 'required|string|max:16',
+                'email' => 'required|string|email|max:255|unique:users',
+                'password' => 'required|string|min:8|confirmed',
+                'no_hp' => 'required|string|max:13',
+                'negara' => 'required|string|max:255',
+                'provinsi' => 'required|string|max:255',
+                'alamat' => 'required|string|max:255',
+            ]);
+    
+            $user = User::create([
+                'nama_lengkap' => $request->nama_lengkap,
+                'nik' => $request->nik,
+                'email' => $request->email,
+                'password' => $request->password, // Ensure to encrypt the password before saving
+                'no_hp' => $request->no_hp,
+                'negara' => $request->negara,
+                'provinsi' => $request->provinsi,
+                'alamat' => $request->alamat,
+                'role' => 'users',
+            ]);
+    
+            return redirect()->route('users.index')->with('success', 'User created successfully.');
+        } catch (\Exception $e) {
+            dd($e);
+            return back()->withInput()->withErrors($e->getMessage());
+        }
     }
+    
 
     public function show($id)
     {
