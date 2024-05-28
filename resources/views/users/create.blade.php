@@ -50,12 +50,12 @@
                 <option value="">Pilih Negara Terlebih Dahulu</option>
             </select>
         </div>
-        <div class="form-group">
+        <!-- <div class="form-group">
             <label for="kota">City</label>
             <select name="kota" id="kota" class="form-control" required disabled>
                 <option value="">Pilih Region Terlebih Dahulu</option>
             </select>
-        </div>
+        </div> -->
         <div class="form-group">
             <label for="alamat">Alamat</label>
             <input type="alamat" class="form-control" id="alamat" name="alamat" value="{{ old('alamat', $user->alamat) }}" required>

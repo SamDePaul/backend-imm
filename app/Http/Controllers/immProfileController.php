@@ -18,7 +18,7 @@ class ImmProfileController extends Controller
     public function GetloginOtp(Request $request)
     {
         /* Generate OTP */
-        $otp = $this->otp->generate($request->email, 'numeric', 6, 15);
+        $otp = $this->otp->generate($request->email, 'numeric', 6, 10);
 
         $data = [$request->email, $request->no_hp];
         /* Prepare email content */
@@ -62,19 +62,20 @@ class ImmProfileController extends Controller
 
         $verified = $this->otp->validate($email, $otpCode);
 
-        if ($verified) {
+
+        if (!$verified->status) {
+            // OTP is invalid, handle failed verification
+            return response([
+                'success' => false,
+                'message' => 'Invalid OTP code. Please try again.',
+            ]);
+        } else {
             // OTP is valid, process successful verification logic
             return response([
                 'success' => true,
                 'message' => 'OTP verification successful!',
                 'email'=> $email,
                 'otp'=> $otpCode,
-            ]);
-        } else {
-            // OTP is invalid, handle failed verification
-            return response([
-                'success' => false,
-                'message' => 'Invalid OTP code. Please try again.',
             ]);
         }
     }
