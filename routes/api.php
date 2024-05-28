@@ -40,7 +40,12 @@ Route::post('/otp-verification', 'ImmProfileController@VerifyOtp');
 Route::get('blogs', 'BlogController@getAll');
 Route::get('blogs/{id}', 'BlogController@getById');
 
-
+Route::get('blogs/{blog}/comments', 'CommentController@getallComments');
+Route::get('comments/{id}', 'CommentController@getComment');
+Route::get('users/{id}/comments', 'CommentController@getUserComment');
+Route::post('blogs/{blog}/comments', 'CommentController@createComment');
+Route::put('comments/{comment}', 'CommentController@editComment');
+Route::delete('comments/{comment}', 'CommentController@deleteF');
 
 
 
