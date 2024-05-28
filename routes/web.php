@@ -42,6 +42,10 @@ Route::get('/mailVerification', function () {
 })->name('mailVerification');
 
 
+Route::resource('blogs', 'BlogController');
+
+
+Route::get('blogs/{blog}/comments', 'CommentController@index')->name('comments.index');
 
 
 

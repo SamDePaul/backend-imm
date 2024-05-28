@@ -37,6 +37,9 @@ Route::get('/projects/{id}', 'ProjectsController@getProject');
 Route::post('/otp', 'ImmProfileController@GetloginOtp');
 Route::post('/otp-verification', 'ImmProfileController@VerifyOtp');
 
+Route::get('blogs', 'BlogController@getAll');
+Route::get('blogs/{id}', 'BlogController@getById');
+
 
 
 
