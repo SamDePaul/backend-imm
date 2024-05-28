@@ -3,184 +3,80 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\immProfile;
-use App\Models\EmailVerification;
-use Mail;
+use Illuminate\Support\Facades\Mail;
+use Otp;
 
-class immProfileController extends Controller
+class ImmProfileController extends Controller
 {
+    private $otp;
 
-    public function sendVerificationCode(Request $request)
+    public function __construct()
     {
-        $request->validate([
-            'email' => 'required|email',
-            'no_hp' => 'required|string|max:15',
-        ]);
-
-        $otp = rand(100000,999999);
-        $time = time();
-
-        $user = new immProfile;
-        $user->email = $request->email;
-
-        EmailVerification::updateOrCreate(
-            ['email' => $user->email],
-            [
-            'email' => $user->email,
-            'otp' => $otp,
-            'created_at' => $time
-            ]
-        );
-
-        $data['email'] = $user->email;
-        $data['title'] = 'Mail Verification';
-
-        $data['body'] = 'Your OTP is:- '.$otp;
-
-        Mail::send('mailVerification',['data'=>$data],function($message) use ($data){
-            $message->to($data['email'])->subject($data['title']);
-        });
-
-        return redirect()->route('verifikasi-kode.form')
-            ->with('email', $request->email)
-            ->with('success', 'Verification code sent to your email.');
+        $this->otp = new Otp;
     }
 
-    public function showCodeVerificationForm(Request $request)
+    public function GetloginOtp(Request $request)
     {
-        return view('immprofiles.verifikasi_kode')->with('email', session('email'));
-    }
+        /* Generate OTP */
+        $otp = $this->otp->generate($request->email, 'numeric', 6, 15);
 
-    public function verifyCode(Request $request)
-    {
-        $request->validate([
-            'email' => 'required|email',
-            'code' => 'required|array',
-            'code.*' => 'required|numeric|digits:1',
-        ]);
+        $data = [$request->email, $request->no_hp];
+        /* Prepare email content */
+        $emailData = [
+            'email' => $request->email,
+            'title' => 'Your Email Verification',
+            'otp' => $otp->token,
+        ];
 
-        $input_code = implode('', $request->code);
-
-        $immProfile = immProfile::where('email', $request->email)
-            ->where('verification_code', $input_code)
-            ->first();
-
-        if ($immProfile) {
-            return redirect()->route('immprofiles.index')
-                ->with('success', 'Verifikasi berhasil.');
-        } else {
-            return back()->withErrors(['code' => 'Kode verifikasi salah.'])
-                         ->withInput();
+        try {
+            // Send email using Mail::send with a Mailable class (recommended)
+            Mail::send('mailVerification', ['data' => $emailData], function ($message) use ($emailData) {
+                $message->to($emailData['email'])->subject($emailData['title']);
+            });
+            return response([
+                'email' => $emailData['email'],
+                'success' => $otp->status,
+                'message' => $otp->message,
+                'token' => $otp->token,
+                'email_sent' => true,
+                'data' => $data,
+            ]);
+        } catch (\Exception $e) {
+            return response([
+                'email' => $request->email,
+                'success' => false,
+                'message' => 'Failed to send OTP via email: ' . $e->getMessage(),
+                'token' => null,
+                'email_sent' => false,
+            ]);
         }
     }
 
-    // /**
-    //  * Display a listing of the resource.
-    //  *
-    //  * @return \Illuminate\Http\Response
-    //  */
-    // public function index()
-    // {
-    //     $immProfiles = ImmProfile::all();
-    //     return view('immProfiles.index', compact('immProfiles'));
-    // }
+    public function VerifyOtp(Request $request)
+    {
+        $email = $request->email;
+        $otpCode = $request->otp_code;
 
-    // /**
-    //  * Show the form for creating a new resource.
-    //  *
-    //  * @return \Illuminate\Http\Response
-    //  */
-    // public function create()
-    // {
-    //     return view('immProfiles.create');
-    // }
+        // Validate email and OTP code (optional)
+        // You can add validation rules here to ensure email is valid format and OTP code has a certain length, etc.
 
-    // /**
-    //  * Store a newly created resource in storage.
-    //  *
-    //  * @param  \Illuminate\Http\Request  $request
-    //  * @return \Illuminate\Http\Response
-    //  */
-    // public function store(Request $request)
-    // {
-    //     $request->validate([
-    //         'nama_perusahaan' => 'required|string|max:255',
-    //         'profil_perusahaan' => 'required|string',
-    //         'email' => 'required|string|email|max:255|unique:immProfiles',
-    //         'negara' => 'required|string|max:255',
-    //         'provinsi' => 'required|string|max:255',
-    //         'kota' => 'required|string|max:255',
-    //         'no_hp' => 'required|string|max:15',
-    //         'jml_karyawan' => 'required|integer',
-    //         'tipe_perusahaan' => 'required|string|max:255',
-    //     ]);
+        $verified = $this->otp->validate($email, $otpCode);
 
-    //     ImmProfile::create($request->all());
+        if ($verified) {
+            // OTP is valid, process successful verification logic
+            return response([
+                'success' => true,
+                'message' => 'OTP verification successful!',
+                'email'=> $email,
+                'otp'=> $otpCode,
+            ]);
+        } else {
+            // OTP is invalid, handle failed verification
+            return response([
+                'success' => false,
+                'message' => 'Invalid OTP code. Please try again.',
+            ]);
+        }
+    }
 
-    //     return redirect()->route('immProfiles.index')
-    //         ->with('success', 'ImmProfile created successfully.');
-    // }
-
-    // /**
-    //  * Display the specified resource.
-    //  *
-    //  * @param  \App\Models\ImmProfile  $immProfile
-    //  * @return \Illuminate\Http\Response
-    //  */
-    // public function show(ImmProfile $immProfile)
-    // {
-    //     return view('immProfiles.show', compact('immProfile'));
-    // }
-
-    // /**
-    //  * Show the form for editing the specified resource.
-    //  *
-    //  * @param  \App\Models\ImmProfile  $immProfile
-    //  * @return \Illuminate\Http\Response
-    //  */
-    // public function edit(ImmProfile $immProfile)
-    // {
-    //     return view('immProfiles.edit', compact('immProfile'));
-    // }
-
-    // /**
-    //  * Update the specified resource in storage.
-    //  *
-    //  * @param  \Illuminate\Http\Request  $request
-    //  * @param  \App\Models\ImmProfile  $immProfile
-    //  * @return \Illuminate\Http\Response
-    //  */
-    // public function update(Request $request, ImmProfile $immProfile)
-    // {
-    //     $request->validate([
-    //         'nama_perusahaan' => 'required|string|max:255',
-    //         'profil_perusahaan' => 'required|string',
-    //         'email' => 'required|string|email|max:255|unique:immProfiles,email,' . $immProfile->id,
-    //         'negara' => 'required|string|max:255',
-    //         'provinsi' => 'required|string|max:255',
-    //         'kota' => 'required|string|max:255',
-    //         'no_hp' => 'required|string|max:15',
-    //         'jml_karyawan' => 'required|integer',
-    //         'tipe_perusahaan' => 'required|string|max:255',
-    //     ]);
-
-    //     $immProfile->update($request->all());
-
-    //     return redirect()->route('immProfiles.index')
-    //         ->with('success', 'ImmProfile updated successfully.');
-    // }
-
-    // /**
-    //  * Remove the specified resource from storage.
-    //  *
-    //  * @param  \App\Models\ImmProfile  $immProfile
-    //  * @return \Illuminate\Http\Response
-    //  */
-    // public function destroy(ImmProfile $immProfile)
-    // {
-    //     $immProfile->delete();
-
-    //     return redirect()->route('immProfiles.index')
-    //         ->with('success', 'ImmProfile deleted successfully.');
-    // }
 }
