@@ -42,6 +42,14 @@ Route::get('/mailVerification', function () {
 })->name('mailVerification');
 
 
+Route::resource('blogs', 'BlogController');
+
+
+Route::get('blogs/{blog}/comments', 'CommentController@index')->name('comments.index');
+
+Route::get('blogs/{blog}/comments', 'CommentController@index')->name('comments.index');
+Route::post('blogs/{blog}/comments','CommentController@store')->name('comments.store');
+Route::delete('comments/{comment}','CommentController@destroy')->name('comments.destroy');
 
 
 

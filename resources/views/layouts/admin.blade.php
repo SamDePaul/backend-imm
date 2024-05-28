@@ -78,9 +78,9 @@
         </li>
 
         <!-- Nav Item - Blog -->
-        <li class="nav-item {{ Nav::isRoute('blog') }}">
-            <a class="nav-link" href="{{ route('blog') }}">
-                <i class="fas fa-fw fa-book"></i>
+        <li class="nav-item {{ Nav::isRoute('blogs.index') }}">
+            <a class="nav-link" href="{{ route('blogs.index') }}">
+                <i class="fas fa-fw fa-blog"></i>
                 <span>{{ __('Blog') }}</span>
             </a>
         </li>
@@ -309,7 +309,11 @@
         <footer class="sticky-footer bg-white">
             <div class="container my-auto">
                 <div class="copyright text-center my-auto">
-                    <span>Copyright &copy; <a href="https://github.com/Estrella-1234" target="_blank">Estrella</a> {{ now()->year }}</span>
+<<<<<<< Updated upstream
+                    <span>Copyright &copy; <a href="https://github.com/SamDePaul/backend-imm" target="_blank">IMM</a> {{ now()->year }}</span>
+=======
+                    <span>Copyright &copy; <a href="https://github.com/SamDePaul" target="_blank">SamDePaul</a> {{ now()->year }}</span>
+>>>>>>> Stashed changes
                 </div>
             </div>
         </footer>
