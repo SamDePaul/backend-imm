@@ -85,6 +85,13 @@
             </a>
         </li>
 
+        <!-- Nav Item - Blog -->
+        <li class="nav-item {{ Nav::isRoute('sdgs.index') }}">
+            <a class="nav-link" href="{{ route('sdgs.index') }}">
+                <i class="fa-solid fa-globe"></i>
+                <span>{{ __('SDG') }}</span>
+            </a>
+        </li>
         <!-- Nav Item - About -->
         <li class="nav-item {{ Nav::isRoute('about') }}">
             <a class="nav-link" href="{{ route('about') }}">
