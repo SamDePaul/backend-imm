@@ -23,6 +23,7 @@ Route::resource('projects', 'ProjectsController');
 Route::resource('sdgs', 'sdgController');
 Route::resource('indicators', 'IndicatorController');
 Route::resource('tags', 'TagController');
+Route::resource('metrics', 'MatrikController');
 Route::resource('companies', 'CompanyController');
 
 Auth::routes();

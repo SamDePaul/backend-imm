@@ -110,6 +110,14 @@
             </a>
         </li>
 
+        <!-- Nav Item - metrics -->
+        <li class="nav-item {{ Nav::isRoute('metrics.index') }}">
+            <a class="nav-link" href="{{ route('metrics.index') }}">
+                <i class="fa-solid fa-globe"></i>
+                <span>{{ __('Metrics') }}</span>
+            </a>
+        </li>
+
         <!-- Nav Item - companies -->
         <li class="nav-item {{ Nav::isRoute('companies.index') }}">
             <a class="nav-link" href="{{ route('companies.index') }}">
