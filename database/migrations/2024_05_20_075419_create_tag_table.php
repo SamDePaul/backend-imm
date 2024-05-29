@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateSdgsTable extends Migration
+class CreateTagTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,8 +13,10 @@ class CreateSdgsTable extends Migration
      */
     public function up()
     {
-        Schema::create('sdgs', function (Blueprint $table) {
+        Schema::create('tags', function (Blueprint $table) {
             $table->id();
+            $table->string('nama');
+            $table->string('parent_id')->nullable();
             $table->timestamps();
         });
     }
@@ -26,6 +28,6 @@ class CreateSdgsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('sdgs');
+        Schema::dropIfExists('tags');
     }
 }

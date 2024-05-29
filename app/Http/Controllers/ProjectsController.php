@@ -4,6 +4,9 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Project;
+use App\Models\Tag;
+use App\Models\Country;
+use App\Models\sdg;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Http\RedirectResponse;
 
@@ -27,7 +30,11 @@ class projectsController extends Controller
 
     public function create()
     {
-        return view('projects.create');
+        $project = new Project;
+        $tags = Tag::all();
+        $countries = Country::all();
+        $sdgs = sdg::all();
+        return view('projects.create', compact('project', 'tags', 'countries', 'sdgs'));
     }
 
     public function store(Request $request): RedirectResponse
