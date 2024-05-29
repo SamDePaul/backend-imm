@@ -37,27 +37,57 @@ class projectsController extends Controller
         return view('projects.create', compact('project', 'tags', 'countries', 'sdgs'));
     }
 
-    public function store(Request $request): RedirectResponse
+    public function store(Request $request)
     {
+        try {
         $request->validate([
+            'tags' => 'required',
             'judul' => 'required|string|max:255',
             'deskripsi' => 'required|string',
-            'tanggal' => 'required|date',
-            'poster_path' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
-            'harga' => 'required|string|max:255',
+            'tujuan' => 'required|string',
+            'tanggalMulai' => 'required|date',
+            'tanggalSelesai' => 'required|date|after_or_equal:tanggalMulai',
+            'negara' => 'required|exists:countries,id',
+            'provinsi' => 'required|exists:regions,id',
+            'kota' => 'required|exists:cities,id',
+            'data_path' => 'required|file|mimes:jpg,jpeg,png',
+            'kategori' => 'required|string',
+            'dana' => 'required|numeric',
+            'jenis_dana' => 'required|string',
+            'dana_lain' => 'required|numeric',
+            'sdg' => 'required|exists:sdgs,id',
+            'indikator' => 'required|exists:indicators,id',
+            'matrik' => 'required|exists:metrics,id',
         ]);
 
-        $posterPath = $request->file('poster_path')->store('public/posters');
+        dd($request->tags);
+        $path = $request->file('data_path')->store('projects', 'public');
 
         Project::create([
+            'tag_id' => $request->tags,
             'judul' => $request->judul,
             'deskripsi' => $request->deskripsi,
-            'tanggal' => $request->tanggal,
-            'poster_path' => str_replace('public/', '', $posterPath),
-            'harga' => $request->harga,
+            'tujuan' => $request->tujuan,
+            'tanggalMulai' => $request->tanggalMulai,
+            'tanggalSelesai' => $request->tanggalSelesai,
+            'negara_id' => $request->negara,
+            'provinsi_id' => $request->provinsi,
+            'kota_id' => $request->kota,
+            'data_path' => $path,
+            'kategori' => $request->kategori,
+            'dana' => $request->dana,
+            'jenis_dana' => $request->jenis_dana,
+            'dana_lain' => $request->dana_lain,
+            'sdg_id' => $request->sdg,
+            'indikator_id' => $request->indikator,
+            'matrik_id' => $request->matrik,
         ]);
 
         return redirect()->route('projects.index')->with('success', 'Project created successfully.');
+    } catch (\Exception $e) {
+        dd($e);
+        return back()->withInput()->withErrors($e->getMessage());
+    }
     }
 
     public function show($id)
@@ -69,37 +99,64 @@ class projectsController extends Controller
     public function edit($id)
     {
         $project = Project::findOrFail($id);
-        return view('projects.edit', compact('project'));
+        $tags = Tag::all();
+        $countries = Country::all();
+        $sdgs = Sdg::all();
+        return view('projects.edit', compact('project', 'tags', 'countries', 'sdgs'));
     }
 
-    public function update(Request $request, $id)
+    public function update(Request $request, Project $project)
     {
         $request->validate([
+            'tags' => 'required',
             'judul' => 'required|string|max:255',
             'deskripsi' => 'required|string',
-            'tanggal' => 'required|date',
-            'poster_path' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
-            'harga' => 'required|string|max:255',
+            'tujuan' => 'required|string',
+            'tanggalMulai' => 'required|date',
+            'tanggalSelesai' => 'required|date|after_or_equal:tanggalMulai',
+            'negara' => 'required|exists:countries,id',
+            'provinsi' => 'required|exists:regions,id',
+            'kota' => 'required|exists:cities,id',
+            'data_path' => 'nullable|file|mimes:jpg,jpeg,png',
+            'kategori' => 'required|string',
+            'dana' => 'required|numeric',
+            'jenis_dana' => 'required|string',
+            'dana_lain' => 'required|numeric',
+            'sdg' => 'required|exists:sdgs,id',
+            'indikator' => 'required|exists:indicators,id',
+            'matrik' => 'required|exists:metrics,id',
         ]);
 
         $project = Project::findOrFail($id);
 
-        if ($request->hasFile('poster_path')) {
+        if ($request->hasFile('data_path')) {
             // Delete the old image if it exists
-            if ($project->poster_path) {
-                Storage::delete('public/' . $project->poster_path);
+            if ($project->data_path) {
+                Storage::delete('public/' . $project->data_path);
             }
 
             // Store the new image
-            $posterPath = $request->file('poster_path')->store('public/posters');
-            $project->poster_path = str_replace('public/', '', $posterPath);
+            $path  = $request->file('data_path')->store('public/data');
+            $project->data_path = str_replace('public/', '', $path );
         }
 
         $project->update([
+            'tag_id' => $request->tags,
             'judul' => $request->judul,
             'deskripsi' => $request->deskripsi,
-            'tanggal' => $request->tanggal,
-            'harga' => $request->harga,
+            'tujuan' => $request->tujuan,
+            'tanggalMulai' => $request->tanggalMulai,
+            'tanggalSelesai' => $request->tanggalSelesai,
+            'negara_id' => $request->negara,
+            'provinsi_id' => $request->provinsi,
+            'kota_id' => $request->kota,
+            'kategori' => $request->kategori,
+            'dana' => $request->dana,
+            'jenis_dana' => $request->jenis_dana,
+            'dana_lain' => $request->dana_lain,
+            'sdg_id' => $request->sdg,
+            'indikator_id' => $request->indikator,
+            'matrik_id' => $request->matrik,
         ]);
 
         return redirect()->route('projects.index')->with('success', 'Project updated successfully.');
@@ -111,8 +168,8 @@ class projectsController extends Controller
         $project = Project::findOrFail($id);
 
         // Delete the image associated with the project
-        if ($project->poster_path) {
-            Storage::delete('public/' . $project->poster_path);
+        if ($project->path) {
+            Storage::delete('public/' . $project->path);
         }
 
         // Delete the project from the database

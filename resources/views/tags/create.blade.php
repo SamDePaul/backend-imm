@@ -6,10 +6,6 @@
     <form action="{{ route('tags.store') }}" method="POST">
         @csrf
         <div class="form-group">
-            <label for="slug">Slug:</label>
-            <input type="text" class="form-control" id="slug" name="slug" required>
-        </div>
-        <div class="form-group">
             <label for="name">Name:</label>
             <input type="text" class="form-control" id="name" name="name" required>
         </div>

@@ -132,7 +132,7 @@ $(document).ready(function () {
       });
 
       function updateMatrik(allMetricData) {
-        $('#matrik').html('<option value="">Pilih Indicator</option>');
+        $('#matrik').html('<option value="">Pilih Matrik</option>');
         $('#matrik').prop('disabled', false);
 
         $.each(allMetricData, function (key, matrik) {

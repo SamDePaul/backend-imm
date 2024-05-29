@@ -13,7 +13,6 @@
         <thead>
         <tr>
             <th>No</th>
-            <th>Slug</th>
             <th>Name</th>
             <th>Actions</th>
         </tr>
@@ -22,8 +21,7 @@
         @foreach($tags as $tag)
             <tr>
                 <td>{{ $loop->iteration }}</td>
-                <td>{{ $tag->slug }}</td>
-                <td>{{ $tag->name }}</td>
+                <td>{{ $tag->nama }}</td>
                 <td>
                     <a href="{{ route('tags.edit', $tag->id) }}" class="btn btn-warning">Edit</a>
                     <button type="button" class="btn btn-danger delete-tag" data-tag-id="{{ $tag->id }}" data-toggle="modal" data-target="#deleteTagModal-{{ $tag->id }}">Delete</button>
