@@ -42,7 +42,6 @@ $(document).ready(function () {
             $('#kota').prop('disabled', true);
         }
     });
-
     $('#sdg').on('change', function () {
         var sdgId = this.value;
         $('#indikator').html('<option value="">Pilih Indicator</option>');
@@ -95,13 +94,13 @@ $(document).ready(function () {
 
           if (values.length > 0) {
             // Get all selected IDs
-            var selectedIds = [];
+            var selectedIdTag = [];
             for (var i = 0; i < values.length; i++) {
-              selectedIds.push(values[i].value);
+                selectedIdTag.push(values[i].value);
             }
 
             // Loop through selected IDs and fetch metric data for each
-            $.each(selectedIds, function(index, tagid) {
+            $.each(selectedIdTag, function(index, tagid) {
               if (tagid) {
                 $.ajax({
                   url: '/get-metric/' + tagid,
@@ -113,7 +112,7 @@ $(document).ready(function () {
                     })
 
                     // Update #matrik after all requests are complete
-                    if (index === selectedIds.length - 1) {
+                    if (index === selectedIdTag.length - 1) {
                       updateMatrik(allMetricData);
                     }
                   },
@@ -128,12 +127,14 @@ $(document).ready(function () {
             // Clear #matrik when no values are selected
             updateMatrik([]);
           }
+          document.getElementById('selectedIdTag').value = JSON.stringify(selectedIdTag);
         }
       });
 
       function updateMatrik(allMetricData) {
         $('#matrik').html('<option value="">Pilih Matrik</option>');
         $('#matrik').prop('disabled', false);
+
 
         $.each(allMetricData, function (key, matrik) {
           var option = $('<option>').val(matrik.data.id).text(matrik.data.name);

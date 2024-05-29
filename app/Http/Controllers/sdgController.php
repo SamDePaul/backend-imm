@@ -62,34 +62,31 @@ class SdgController extends Controller
 
     public function getIndicators($sdgs_id)
     {
-        \Log::info("Received sdgs_id: $sdgs_id");
         try {
             $indicators = Indicator::where('sdg_id', $sdgs_id)->get();
             return response()->json($indicators);
         } catch (\Exception $e) {
-            \Log::error("Error retrieving indicators: " . $e->getMessage());
+
             return response()->json(['error' => 'Internal Server Error'], 500);
         }
     }
 
     public function getMatriks($tag_id)
     {
-        \Log::info("Received tag_id: $tag_id");
         try {
             $matrikTags = MetricTag::where('tag_id', $tag_id)->get();
-            \Log::info("Received matriktag: $matrikTags");
+
             if ($matrikTags) {
                 $matriks = [];
                 foreach ($matrikTags as $matrikTag) {
                     $metric_id = $matrikTag->metric_id;
-                    \Log::info("Processing MatrikTag with metric_id: $metric_id");
 
                     $matrik = Metric::find($metric_id);
                     if ($matrik) {
                         $matriks[] = $matrik; // Add the retrieved Metric to the array
 
                     } else {
-                        \Log::info("Metric not found for metric_id: $metric_id");
+
                     }
                 }
                 return response()->json($matriks);
@@ -98,7 +95,7 @@ class SdgController extends Controller
                 // Handle the case where no tag is found
             }
         } catch (\Exception $e) {
-            \Log::error("Error retrieving matriks: " . $e->getMessage());
+
             return response()->json(['error' => 'Internal Server Error'], 500);
         }
     }

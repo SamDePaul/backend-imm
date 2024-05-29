@@ -41,29 +41,28 @@ class projectsController extends Controller
     {
         try {
         $request->validate([
-            'tags' => 'required',
+            'selectedIdTag' => 'required|string',
             'judul' => 'required|string|max:255',
             'deskripsi' => 'required|string',
             'tujuan' => 'required|string',
             'tanggalMulai' => 'required|date',
             'tanggalSelesai' => 'required|date|after_or_equal:tanggalMulai',
-            'negara' => 'required|exists:countries,id',
-            'provinsi' => 'required|exists:regions,id',
-            'kota' => 'required|exists:cities,id',
+            'negara' => 'required|string',
+            'provinsi' => 'required|string',
+            'kota' => 'required|string',
             'data_path' => 'required|file|mimes:jpg,jpeg,png',
             'kategori' => 'required|string',
             'dana' => 'required|numeric',
             'jenis_dana' => 'required|string',
             'dana_lain' => 'required|numeric',
-            'sdg' => 'required|exists:sdgs,id',
-            'indikator' => 'required|exists:indicators,id',
-            'matrik' => 'required|exists:metrics,id',
+            'sdg' => 'required|string',
+            'indikator' => 'required|string',
+            'matrik' => 'required|string',
         ]);
 
-        dd($request->tags);
         $path = $request->file('data_path')->store('projects', 'public');
 
-        Project::create([
+        $project = Project::create([
             'tag_id' => $request->tags,
             'judul' => $request->judul,
             'deskripsi' => $request->deskripsi,
