@@ -41,7 +41,7 @@ class projectsController extends Controller
     {
         try {
         $request->validate([
-            'selectedIdTag' => 'required|string',
+            'tags' => 'required|string',
             'judul' => 'required|string|max:255',
             'deskripsi' => 'required|string',
             'tujuan' => 'required|string',
@@ -107,23 +107,23 @@ class projectsController extends Controller
     public function update(Request $request, Project $project)
     {
         $request->validate([
-            'tags' => 'required',
+            'tags' => 'required|string',
             'judul' => 'required|string|max:255',
             'deskripsi' => 'required|string',
             'tujuan' => 'required|string',
             'tanggalMulai' => 'required|date',
             'tanggalSelesai' => 'required|date|after_or_equal:tanggalMulai',
-            'negara' => 'required|exists:countries,id',
-            'provinsi' => 'required|exists:regions,id',
-            'kota' => 'required|exists:cities,id',
-            'data_path' => 'nullable|file|mimes:jpg,jpeg,png',
+            'negara' => 'required|string',
+            'provinsi' => 'required|string',
+            'kota' => 'required|string',
+            'data_path' => 'required|file|mimes:jpg,jpeg,png',
             'kategori' => 'required|string',
             'dana' => 'required|numeric',
             'jenis_dana' => 'required|string',
             'dana_lain' => 'required|numeric',
-            'sdg' => 'required|exists:sdgs,id',
-            'indikator' => 'required|exists:indicators,id',
-            'matrik' => 'required|exists:metrics,id',
+            'sdg' => 'required|string',
+            'indikator' => 'required|string',
+            'matrik' => 'required|string',
         ]);
 
         $project = Project::findOrFail($id);
