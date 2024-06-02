@@ -78,4 +78,23 @@ class CompanyController extends Controller
 
         return redirect()->route('companies.index')->with('success', 'Company deleted successfully.');
     }
+
+    public function createCompany(Request $request)
+    {
+        $request->validate([
+            'nama_perusahaan' => 'required',
+            'nama_pic' => 'required',
+            'posisi_pic' => 'required',
+            'nomor_telepon' => 'required',
+            'country' => 'required',
+            'provinsi' => 'required',
+            'kabupaten' => 'required',
+            'jumlah_karyawan' => 'required|integer',
+            'tipe_perusahaan' => 'required',
+        ]);
+
+        Company::create($request->all());
+
+        return response()->json($request);
+    }
 }
