@@ -13,6 +13,12 @@ class TagController extends Controller
         return view('tags.index', compact('tags'));
     }
 
+    public function getTag()
+    {
+        $tags = Tag::all();
+        return response()->json($tags);
+    }
+
     public function create()
     {
         return view('tags.create');

@@ -21,13 +21,13 @@ class FrontendRegisterController extends Controller
     {
         $validator = Validator::make($request->all(), [
             'nama_lengkap' => ['required', 'string', 'max:255'],
-            'nik' => ['required', 'string', 'min:16', 'max:16'],
+            'nik' => ['required', 'string'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
-            'password' => ['required', 'string', 'min:8', 'confirmed'],
+            'password' => ['required', 'string', 'min:8'],
             'negara' => ['required', 'string', 'max:255'],
             'provinsi' => ['required', 'string', 'max:255'],
             'alamat' => ['required', 'string', 'max:255'],
-            'no_hp' => ['required', 'string', 'min:10', 'max:13'],
+            'no_hp' => ['required', 'string'],
         ]);
 
         if ($validator->fails()) {
