@@ -6,11 +6,11 @@ use Illuminate\Http\Request;
 use App\Models\Project;
 use App\Models\Tag;
 use App\Models\Country;
-use App\Models\sdg;
+use App\Models\Sdg;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Http\RedirectResponse;
 
-class projectsController extends Controller
+class ProjectsController extends Controller
 {
     public function index(Request $request)
     {
@@ -25,21 +25,18 @@ class projectsController extends Controller
             ->paginate(10);
 
         return view('projects.index', compact('projects'));
-
     }
 
     public function create()
     {
-        $project = new Project;
         $tags = Tag::all();
         $countries = Country::all();
-        $sdgs = sdg::all();
-        return view('projects.create', compact('project', 'tags', 'countries', 'sdgs'));
+        $sdgs = Sdg::all();
+        return view('projects.create', compact('tags', 'countries', 'sdgs'));
     }
 
     public function store(Request $request)
     {
-        try {
         $request->validate([
             'tags' => 'required|string',
             'judul' => 'required|string|max:255',
@@ -83,10 +80,6 @@ class projectsController extends Controller
         ]);
 
         return redirect()->route('projects.index')->with('success', 'Project created successfully.');
-    } catch (\Exception $e) {
-        dd($e);
-        return back()->withInput()->withErrors($e->getMessage());
-    }
     }
 
     public function show($id)
@@ -116,7 +109,7 @@ class projectsController extends Controller
             'negara' => 'required|string',
             'provinsi' => 'required|string',
             'kota' => 'required|string',
-            'data_path' => 'required|file|mimes:jpg,jpeg,png',
+            'data_path' => 'nullable|file|mimes:jpg,jpeg,png',
             'kategori' => 'required|string',
             'dana' => 'required|numeric',
             'jenis_dana' => 'required|string',
@@ -126,17 +119,13 @@ class projectsController extends Controller
             'matrik' => 'required|string',
         ]);
 
-        $project = Project::findOrFail($id);
-
         if ($request->hasFile('data_path')) {
-            // Delete the old image if it exists
             if ($project->data_path) {
                 Storage::delete('public/' . $project->data_path);
             }
 
-            // Store the new image
-            $path  = $request->file('data_path')->store('public/data');
-            $project->data_path = str_replace('public/', '', $path );
+            $path = $request->file('data_path')->store('projects', 'public');
+            $project->data_path = $path;
         }
 
         $project->update([
@@ -161,17 +150,14 @@ class projectsController extends Controller
         return redirect()->route('projects.index')->with('success', 'Project updated successfully.');
     }
 
-
     public function destroy($id)
     {
         $project = Project::findOrFail($id);
 
-        // Delete the image associated with the project
-        if ($project->path) {
-            Storage::delete('public/' . $project->path);
+        if ($project->data_path) {
+            Storage::delete('public/' . $project->data_path);
         }
 
-        // Delete the project from the database
         $project->delete();
 
         return redirect()->route('projects.index')->with('success', 'Project deleted successfully.');
@@ -194,4 +180,5 @@ class projectsController extends Controller
             'project' => $project,
         ]);
     }
+    
 }
