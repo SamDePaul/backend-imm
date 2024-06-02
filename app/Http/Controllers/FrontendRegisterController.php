@@ -31,6 +31,7 @@ class FrontendRegisterController extends Controller
         ]);
 
         if ($validator->fails()) {
+            
             return response()->json(['error' => $validator->errors()], 422);
         }
 
