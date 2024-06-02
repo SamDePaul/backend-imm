@@ -34,6 +34,9 @@ Route::get('/tag', 'TagController@getTag')->name('tag');
 Route::get('/company', 'CompanyController@getCompany')->name('company');
 Route::post('/company', 'CompanyController@createCompany')->name('addcompany');
 
+Route::get('/user', 'UserController@getUser')->name('getUser');
+
+
 Route::get('/projects', 'ProjectsController@getAllProjects');
 Route::get('/projects/{id}', 'ProjectsController@getProject');
 

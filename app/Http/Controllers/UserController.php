@@ -50,7 +50,7 @@ class UserController extends Controller
                 'provinsi' => 'required|string|max:255',
                 'alamat' => 'required|string|max:255',
             ]);
-    
+
             $user = User::create([
                 'nama_lengkap' => $request->nama_lengkap,
                 'nik' => $request->nik,
@@ -62,14 +62,14 @@ class UserController extends Controller
                 'alamat' => $request->alamat,
                 'role' => 'users',
             ]);
-    
+
             return redirect()->route('users.index')->with('success', 'User created successfully.');
         } catch (\Exception $e) {
             dd($e);
             return back()->withInput()->withErrors($e->getMessage());
         }
     }
-    
+
 
     public function show($id)
     {
@@ -122,5 +122,11 @@ class UserController extends Controller
         $user->delete();
 
         return redirect()->route('users.index')->with('success', 'User deleted successfully.');
+    }
+
+    public function getUser()
+    {
+        $user = User::where('role', 'users')->get();
+        return response()->json($user);
     }
 }
