@@ -31,6 +31,7 @@ Route::get('/matrik', 'MatrikController@getMatrik')->name('matrik');
 Route::get('/indicator', 'IndicatorController@getIndicators')->name('sdg');
 Route::get('/sdg', 'sdgController@getSdg')->name('sdg');
 Route::get('/tag', 'TagController@getTag')->name('tag');
+Route::get('/company', 'CompanyController@getCompany')->name('company');
 
 Route::get('/projects', 'ProjectsController@getAllProjects');
 Route::get('/projects/{id}', 'ProjectsController@getProject');

@@ -13,6 +13,12 @@ class CompanyController extends Controller
         return view('companies.index', compact('companies'));
     }
 
+    public function getCompany()
+    {
+        $companies = Company::all();
+        return response()->json($companies);
+    }
+
     public function create()
     {
         return view('companies.create');
