@@ -10,6 +10,15 @@
             <input type="text" class="form-control" id="nama_perusahaan" name="nama_perusahaan" required>
         </div>
         <div class="form-group">
+            <label for="user_id">User</label>
+            <select name="user_id" id="user_id" class="form-control" required>
+                <option value=""></option>
+                @foreach($users as $user)
+                    <option value="{{ $user->id }}">{{ $user->nama_lengkap }}</option>
+                @endforeach
+            </select>
+        </div>
+        <div class="form-group">
             <label for="profil_perusahaan">Profil Perusahaan:</label>
             <textarea class="form-control" id="profil_perusahaan" name="profil_perusahaan"></textarea>
         </div>

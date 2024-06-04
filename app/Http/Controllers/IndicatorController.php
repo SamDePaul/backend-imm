@@ -67,4 +67,15 @@ class IndicatorController extends Controller
 
         return redirect()->route('indicators.index')->with('success', 'Indicator deleted successfully.');
     }
+
+    public function getIndicators()
+    {
+        try {
+            $indicators = Indicator::all();
+            return response()->json($indicators);
+        } catch (\Exception $e) {
+
+            return response()->json(['error' => 'Internal Server Error'], 500);
+        }
+    }
 }

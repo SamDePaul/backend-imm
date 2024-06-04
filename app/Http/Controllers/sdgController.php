@@ -99,4 +99,15 @@ class SdgController extends Controller
             return response()->json(['error' => 'Internal Server Error'], 500);
         }
     }
+
+    public function getSdg()
+    {
+        try {
+            $sdgs = sdg::all();
+            return response()->json($sdgs);
+        } catch (\Exception $e) {
+
+            return response()->json(['error' => 'Internal Server Error'], 500);
+        }
+    }
 }

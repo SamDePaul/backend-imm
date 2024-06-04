@@ -33,6 +33,7 @@ Route::get('/sdg', 'sdgController@getSdg')->name('sdg');
 Route::get('/tag', 'TagController@getTag')->name('tag');
 Route::get('/company', 'CompanyController@getCompany')->name('company');
 Route::post('/company', 'CompanyController@createCompany')->name('addcompany');
+Route::post('/projects', 'ProjectsController@createProject')->name('addproject');
 
 Route::get('/user', 'UserController@getUser')->name('getUser');
 

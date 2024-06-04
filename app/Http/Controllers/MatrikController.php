@@ -62,7 +62,7 @@ class MatrikController extends Controller
     public function getMatrik()
     {
         // Fetch all tasks from the database
-        $matrik = Matrik::all();
+        $matrik = Metric::all();
         return response()->json($matrik);
     }
 }

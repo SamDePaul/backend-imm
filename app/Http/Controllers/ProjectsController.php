@@ -180,5 +180,55 @@ class ProjectsController extends Controller
             'project' => $project,
         ]);
     }
-    
+
+    public function createProject(Request $request)
+    {
+        \Log::info($request);
+        $request->validate([
+            'tags' => 'required|numeric',
+            'judul' => 'required|string|max:255',
+            'deskripsi' => 'required|string',
+            'tujuan' => 'required|string',
+            'tanggalMulai' => 'required',
+            'tanggalSelesai' => 'required',
+            'negara' => 'required|numeric',
+            'provinsi' => 'required|numeric',
+            'kota' => 'required|numeric',
+            'data_path' => 'required|string',
+            'kategori' => 'required|string',
+            'dana' => 'required|numeric',
+            'jenis_dana' => 'required|string',
+            'dana_lain' => 'required|numeric',
+            'sdg' => 'required|numeric',
+            'indikator' => 'required|numeric',
+            'matrik' => 'required|numeric',
+        ]);
+
+        $path = $request->file('data_path');
+
+        $project = Project::create([
+            'tag_id' => $request->tags,
+            'judul' => $request->judul,
+            'deskripsi' => $request->deskripsi,
+            'tujuan' => $request->tujuan,
+            'tanggalMulai' => $request->tanggalMulai,
+            'tanggalSelesai' => $request->tanggalSelesai,
+            'negara_id' => $request->negara,
+            'provinsi_id' => $request->provinsi,
+            'kota_id' => $request->kota,
+            'kategori' => $request->kategori,
+            'dana' => $request->dana,
+            'jenis_dana' => $request->jenis_dana,
+            'dana_lain' => $request->dana_lain,
+            'sdg_id' => $request->sdg,
+            'indikator_id' => $request->indikator,
+            'matrik_id' => $request->matrik,
+            'data_path' => $path,
+        ]);
+
+        return response()->json([
+            'project' => $project,
+        ]);
+    }
+
 }
