@@ -60,6 +60,7 @@ class ProjectsController extends Controller
         $path = $request->file('data_path')->store('projects', 'public');
 
         $project = Project::create([
+            'user_id' => auth()->id(), // Mengisikan user ID secara otomatis
             'tag_id' => $request->tags,
             'judul' => $request->judul,
             'deskripsi' => $request->deskripsi,
@@ -207,6 +208,7 @@ class ProjectsController extends Controller
         $path = $request->file('data_path');
 
         $project = Project::create([
+            'user_id' => auth()->id(), // Mengisikan user ID secara otomatis
             'tag_id' => $request->tags,
             'judul' => $request->judul,
             'deskripsi' => $request->deskripsi,
@@ -230,5 +232,5 @@ class ProjectsController extends Controller
             'project' => $project,
         ]);
     }
-
 }
+

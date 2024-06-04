@@ -3,8 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\Company;
-use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class CompanyController extends Controller
 {
@@ -39,7 +39,18 @@ class CompanyController extends Controller
             'tipe_perusahaan' => 'required',
         ]);
 
-        Company::create($request->all());
+        Company::create([
+            'user_id' => Auth::id(), // Mengisi user_id dengan ID pengguna yang sedang login
+            'nama_perusahaan' => $request->nama_perusahaan,
+            'nama_pic' => $request->nama_pic,
+            'posisi_pic' => $request->posisi_pic,
+            'nomor_telepon' => $request->nomor_telepon,
+            'country' => $request->country,
+            'provinsi' => $request->provinsi,
+            'kabupaten' => $request->kabupaten,
+            'jumlah_karyawan' => $request->jumlah_karyawan,
+            'tipe_perusahaan' => $request->tipe_perusahaan,
+        ]);
 
         return redirect()->route('companies.index')->with('success', 'Company created successfully.');
     }
@@ -83,7 +94,6 @@ class CompanyController extends Controller
     public function createCompany(Request $request)
     {
         $request->validate([
-            'user_id' => 'required',
             'nama_perusahaan' => 'required',
             'nama_pic' => 'required',
             'posisi_pic' => 'required',
@@ -95,8 +105,19 @@ class CompanyController extends Controller
             'tipe_perusahaan' => 'required',
         ]);
 
-        Company::create($request->all());
+        Company::create([
+            'user_id' => Auth::id(), // Mengisi user_id dengan ID pengguna yang sedang login
+            'nama_perusahaan' => $request->nama_perusahaan,
+            'nama_pic' => $request->nama_pic,
+            'posisi_pic' => $request->posisi_pic,
+            'nomor_telepon' => $request->nomor_telepon,
+            'country' => $request->country,
+            'provinsi' => $request->provinsi,
+            'kabupaten' => $request->kabupaten,
+            'jumlah_karyawan' => $request->jumlah_karyawan,
+            'tipe_perusahaan' => $request->tipe_perusahaan,
+        ]);
 
-        return response()->json($request);
+        return response()->json(['success' => 'Company created successfully.']);
     }
 }

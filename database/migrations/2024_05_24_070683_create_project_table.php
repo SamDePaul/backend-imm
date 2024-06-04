@@ -15,6 +15,7 @@ class CreateProjectTable extends Migration
     {
         Schema::create('projects', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('user_id')->constrained('users')->onDelete('cascade');
             $table->foreignId('tag_id')->constrained('tags');
             $table->string('judul');
             $table->text('deskripsi');

@@ -10,9 +10,10 @@ class Project extends Model
     use HasFactory;
 
     protected $fillable = [
+        'user_id',
         'tag_id',
         'judul',
-        'deskripsi',
+        'deskripsi', 
         'tujuan',
         'tanggalMulai',
         'tanggalSelesai',
@@ -50,5 +51,9 @@ class Project extends Model
     return view('projects.index', compact('projects'));
 }
 
-    // Anda bisa menambahkan relasi lain sesuai kebutuhan
+public function user()
+{
+    return $this->belongsTo(User::class);
 }
+}
+

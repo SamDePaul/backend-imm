@@ -10,7 +10,7 @@ class Company extends Model
     use HasFactory;
 
     protected $fillable = [
-        'nama_perusahaan', 'profil_perusahaan', 'nama_pic', 'posisi_pic', 'nomor_telepon',
+        'user_id', 'nama_perusahaan', 'profil_perusahaan', 'nama_pic', 'posisi_pic', 'nomor_telepon',
         'country', 'provinsi', 'kabupaten', 'jumlah_karyawan', 'tipe_perusahaan'
     ];
 }
