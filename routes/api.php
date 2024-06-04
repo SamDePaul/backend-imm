@@ -6,6 +6,15 @@ use App\Controllers\IndicatorController;
 use App\Controllers\MatrikController;
 use App\Controllers\sdgController;
 use App\Controllers\immProfileController;
+use App\Controllers\TagController;
+use App\Controllers\CompanyController;
+use App\Controllers\ProjectsController;
+use App\Controllers\UserController;
+use App\Controllers\BlogController;
+use App\Controllers\CommentController;
+use App\Controllers\FrontendAuthController;
+use App\Controllers\FrontendRegisterController;
+
 
 
 
@@ -54,5 +63,5 @@ Route::post('blogs/{blog}/comments', 'CommentController@createComment');
 Route::put('comments/{comment}', 'CommentController@editComment');
 Route::delete('comments/{comment}', 'CommentController@deleteF');
 
-
+    
 

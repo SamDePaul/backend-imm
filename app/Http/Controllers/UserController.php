@@ -94,7 +94,7 @@ class UserController extends Controller
             'no_hp' => 'required|string|min:10|max:13',
             'negara' => 'required|string|max:255',
             'provinsi' => 'required|string|max:255',
-            'alamat' => 'required|string|max:255',
+            'alamat' => 'required|string|max:255',\
         ]);
 
         $user = User::findOrFail($id);
