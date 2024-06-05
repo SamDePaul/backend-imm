@@ -83,7 +83,6 @@ class CompanyController extends Controller
     public function createCompany(Request $request)
     {
         $request->validate([
-            'user_id' => 'required',
             'nama_perusahaan' => 'required',
             'nama_pic' => 'required',
             'posisi_pic' => 'required',
