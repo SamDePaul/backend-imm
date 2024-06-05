@@ -26,6 +26,9 @@ Route::resource('tags', 'TagController');
 Route::resource('metrics', 'MatrikController');
 Route::resource('companies', 'CompanyController');
 
+
+
+
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
@@ -49,14 +52,17 @@ Route::get('/mailVerification', function () {
     return view('mailVerification');
 })->name('mailVerification');
 
-
+//blog
 Route::resource('blogs', 'BlogController');
-
-
 Route::get('blogs/{blog}/comments', 'CommentController@index')->name('comments.index');
 Route::get('blogs/{blog}/comments', 'CommentController@index')->name('comments.index');
 Route::post('blogs/{blog}/comments','CommentController@store')->name('comments.store');
 Route::delete('comments/{comment}','CommentController@destroy')->name('comments.destroy');
+
+//Surveys
+Route::resource('surveys', SurveyController::class);
+Route::resource('surveys.questions', QuestionController::class)->except(['index', 'show']);
+Route::post('surveys/{survey}/responses', [ResponseController::class, 'store'])->name('responses.store');
 
 
 

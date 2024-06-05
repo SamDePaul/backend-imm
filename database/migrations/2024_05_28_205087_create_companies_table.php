@@ -10,6 +10,7 @@ class CreateCompaniesTable extends Migration
     {
         Schema::create('companies', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('user_id')->constrained('users')->onDelete('cascade');
             $table->string('nama_perusahaan');
             $table->text('profil_perusahaan')->nullable();
             $table->string('nama_pic');
