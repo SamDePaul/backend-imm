@@ -20,6 +20,7 @@ class CreateProjectTable extends Migration
             $table->string('judul');
             $table->text('deskripsi');
             $table->string('tujuan');
+            $table->string('targetPelanggan');
             $table->datetime('tanggalMulai');
             $table->datetime('tanggalSelesai');
             $table->foreignId('negara_id');

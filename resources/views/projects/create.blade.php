@@ -27,6 +27,42 @@
             <input class="form-control" id="tujuan" name="tujuan" value="{{ old('tujuan') }}" required></input>
         </div>
         <div class="form-group">
+            <label for="targetPelanggan">Target Pelanggan</label>
+            <select name="targetPelanggan" id="targetPelanggan" class="form-control" required>
+                <option value=""></option>
+                <option value="Pekerja Swasta">Pekerja Swasta</option>
+                <option value="Pegawai Negeri Sipil (PNS)">Pegawai Negeri Sipil (PNS)</option>
+                <option value="Wiraswasta">Wiraswasta</option>
+                <option value="Dokter">Dokter</option>
+                <option value="Guru">Guru</option>
+                <option value="Pengacara">Pengacara</option>
+                <option value="Polisi">Polisi</option>
+                <option value="Tentara">Tentara</option>
+                <option value="Buruh">Buruh</option>
+                <option value="Petani">Petani</option>
+                <option value="Nelayan">Nelayan</option>
+                <option value="Pengusaha">Pengusaha</option>
+                <option value="Karyawan">Karyawan</option>
+                <option value="Mahasiswa">Mahasiswa</option>
+                <option value="Pelajar">Pelajar</option>
+                <option value="Ibu Rumah Tangga">Ibu Rumah Tangga</option>
+                <option value="Seniman">Seniman</option>
+                <option value="Pengrajin">Pengrajin</option>
+                <option value="Jurnalis">Jurnalis</option>
+                <option value="Peneliti">Peneliti</option>
+                <option value="Teknisi">Teknisi</option>
+                <option value="Arsitek">Arsitek</option>
+                <option value="Insinyur">Insinyur</option>
+                <option value="Akuntan">Akuntan</option>
+                <option value="Perawat">Perawat</option>
+                <option value="Pustakawan">Pustakawan</option>
+                <option value="Apoteker">Apoteker</option>
+                <option value="Sopir">Sopir</option>
+                <option value="Satpam">Satpam</option>
+                <option value="Petugas Kebersihan">Petugas Kebersihan</option>
+            </select>
+        </div>
+        <div class="form-group">
             <label for="tanggalMulai">Date Start</label>
             <input type="datetime-local" class="form-control" id="tanggalMulai" name="tanggalMulai" value="{{ old('tanggalMulai') }}" required>
         </div>
