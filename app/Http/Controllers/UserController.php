@@ -129,4 +129,10 @@ class UserController extends Controller
         $user = User::where('role', 'users')->get();
         return response()->json($user);
     }
+
+    public function getUserByEmail($email)
+    {
+        $user_id = User::where('email', $email)->get();
+        return response()->json($user_id);
+    }
 }

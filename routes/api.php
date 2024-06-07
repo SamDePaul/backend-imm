@@ -45,6 +45,7 @@ Route::post('/company', 'CompanyController@createCompany')->name('addcompany');
 Route::post('/projects', 'ProjectsController@createProject')->name('addproject');
 
 Route::get('/user', 'UserController@getUser')->name('getUser');
+Route::get('/user/{email}', 'UserController@getUserByEmail')->name('getUserByEmail');
 
 
 Route::get('/projects', 'ProjectsController@getAllProjects');
