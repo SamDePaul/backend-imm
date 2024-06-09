@@ -14,6 +14,14 @@
                     <th>Business Name</th>
                     <th>Survey Title</th>
                     <th>Survey Description</th>
+                    <th>Nama Lengkap</th>
+                    <th>Email</th>
+                    <th>No HP</th>
+                    <th>Pertanyaan 1</th>
+                    <th>Pertanyaan 2</th>
+                    <th>Pertanyaan 3</th>
+                    <th>Pertanyaan 4</th>
+                    <th>Pertanyaan 5</th>
                     <th>Action</th>
                 </tr>
             </thead>
@@ -24,6 +32,14 @@
                         <td>{{ $survey->business_name }}</td>
                         <td>{{ $survey->survey_title }}</td>
                         <td>{{ $survey->survey_description }}</td>
+                        <td>{{ $survey->nama_lengkap }}</td>
+                        <td>{{ $survey->email }}</td>
+                        <td>{{ $survey->no_hp }}</td>
+                        <td>{{ $survey->pertanyaan_1 }}</td>
+                        <td>{{ $survey->pertanyaan_2 }}</td>
+                        <td>{{ $survey->pertanyaan_3 }}</td>
+                        <td>{{ $survey->pertanyaan_4 }}</td>
+                        <td>{{ $survey->pertanyaan_5 }}</td>
                         <td>
                             <a href="{{ route('surveys.edit', $survey->id) }}" class="btn btn-warning">Edit</a>
                             <form action="{{ route('surveys.destroy', $survey->id) }}" method="POST" style="display:inline;">
