@@ -68,4 +68,8 @@ Route::put('comments/{comment}', 'CommentController@editComment');
 Route::delete('comments/{comment}', 'CommentController@deleteF');
 
 
+Route::get('/get-regions/{country_id}', 'ProvinceController@getRegions');
+Route::get('/get-cities/{region_id}', 'ProvinceController@getCities');
+Route::get('/get-countries', 'ProvinceController@getCountries');
+
 

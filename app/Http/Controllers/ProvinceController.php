@@ -5,11 +5,22 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\City; // Pastikan model City sesuai dengan tabel Anda
 use App\Models\State;
+use App\Models\Country;
 
 class ProvinceController extends Controller
 {
+    public function getCountries()
+    {
+        try {
+            $Countries = Country::all()->get();
+            return response()->json($Countries);
+        } catch (\Exception $e) {
+            return response()->json(['error' => 'Internal Server Error'], 500);
+        }
+    }
+
     public function getRegions($country_id)
-    {   
+    {
         \Log::info("Received country_id: $country_id");
         try {
             $states = State::where('country_id', $country_id)->get();
