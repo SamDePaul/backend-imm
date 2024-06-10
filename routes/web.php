@@ -45,6 +45,8 @@ Route::get('/blog', 'PostController@index')->name('blog');
 Route::get('/get-regions/{country_id}', 'ProvinceController@getRegions');
 Route::get('/get-cities/{region_id}', 'ProvinceController@getCities');
 
+Route::get('/company/{company_id}', 'CompanyController@getCompanyById')->name('getCompanyByID');
+
 Route::get('/get-indicator/{sdg_id}', 'sdgController@getIndicators');
 Route::get('/get-metric/{tag_id}', 'sdgController@getMatriks');
 Route::get('/get-metric-by-indicator/{indicator_id}', 'sdgController@getMatriksByIndicator');

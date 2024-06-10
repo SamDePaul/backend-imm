@@ -42,6 +42,7 @@ Route::get('/sdg', 'sdgController@getSdg')->name('sdg');
 Route::get('/tag', 'TagController@getTag')->name('tag');
 Route::get('/company', 'CompanyController@getCompany')->name('company');
 Route::post('/company', 'CompanyController@createCompany')->name('addcompany');
+Route::get('/company/{company_id}', 'CompanyController@getCompanyById')->name('getCompanyByID');
 Route::post('/projects', 'ProjectsController@createProject')->name('addproject');
 Route::get('/get-metric-by-indicator/{indicator_id}', 'sdgController@getMatriksByIndicator');
 
