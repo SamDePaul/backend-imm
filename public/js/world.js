@@ -144,64 +144,56 @@ $(document).ready(function () {
     }
 
 
-    // SDG
-    new MultiSelectTag('sdg', {
-        // ... other MultiSelectTag options
+// SDG
+new MultiSelectTag('sdg', {
+    // ... other MultiSelectTag options
 
-        onChange: function (values) {
-            var allIndicatorData = [];
+    onChange: function (values) {
+        var allIndicatorData = [];
+        var selectedIdSdg = [];
 
-            if (values.length > 0) {
-                var selectedIdSdg = [];
-                for (var i = 0; i < values.length; i++) {
-                    selectedIdSdg.push(values[i].value);
-                }
-
-                $.each(selectedIdSdg, function (index, sdgId) {
-                    if (sdgId) {
-                        $.ajax({
-                            url: '/get-indicator/' + sdgId,
-                            type: "GET",
-                            dataType: "json",
-                            success: function (data) {
-                                $.each(data, function (key, data) {
-                                    allIndicatorData.push({ data: data });
-                                });
-
-                                if (index === selectedIdSdg.length - 1) {
-                                    updateIndicator(allIndicatorData);
-                                }
-                            },
-                            error: function (jqXHR, textStatus, errorThrown) {
-                                console.error("Error fetching metric data:", textStatus, errorThrown);
-                            }
-                        });
-                    }
-                });
-            } else {
-                updateIndicator([]);
+        if (values.length > 0) {
+            for (var i = 0; i < values.length; i++) {
+                selectedIdSdg.push(values[i].value);
             }
-            document.getElementById('selectedIdSdg').value = JSON.stringify(selectedIdSdg);
+
+            var ajaxRequests = selectedIdSdg.map(function (sdgId) {
+                return $.ajax({
+                    url: '/get-indicator/' + sdgId,
+                    type: "GET",
+                    dataType: "json"
+                });
+            });
+
+            $.when.apply($, ajaxRequests).done(function () {
+                for (var i = 0; i < arguments.length; i++) {
+                    var data = arguments[i][0];
+                    allIndicatorData = allIndicatorData.concat(data);
+                }
+                updateIndicator(allIndicatorData);
+            }).fail(function (jqXHR, textStatus, errorThrown) {
+                console.error("Error fetching indicator data:", textStatus, errorThrown);
+            });
+        } else {
+            updateIndicator([]);
         }
+
+        document.getElementById('selectedIdSdg').value = JSON.stringify(selectedIdSdg);
+    }
+});
+
+function updateIndicator(allIndicatorData) {
+    $('#indikator').html('<option value="">Pilih Indicator</option>');
+    $('#indikator').prop('disabled', false);
+
+    var multiSelectData = allIndicatorData.map(function (indicator) {
+        return {
+            value: indicator.id,
+            text: indicator.name
+        };
     });
 
-
-    function updateIndicator(allIndicatorData) {
-        $('#indikator').html('<option value="">Pilih Indicator</option>');
-        $('#indikator').prop('disabled', false);
-
-        var multiSelectData = [];
-
-        $.each(allIndicatorData, function (key, indicator) {
-            multiSelectData.push({
-                value: indicator.data.id,
-                text: indicator.data.name
-            });
-        });
-
-        return multiSelectData;
-    }
-
+    // Re-initialize MultiSelectTag with new data
     new MultiSelectTag('indikator', {
         data: multiSelectData,
         onChange: function (values) {
@@ -210,84 +202,79 @@ $(document).ready(function () {
                 for (var i = 0; i < values.length; i++) {
                     selectedIndicators.push(values[i].value);
                 }
-            } else {
                 updateMatrik(selectedIndicators);
+            } else {
+                updateMatrik([]);
             }
         }
     });
+}
 
+function updateMatrik(selectedIndicators) {
+    var allMatrikData = [];
 
-    function updateMatrik(selectedIndicators) {
-        var allMatrikData = [];
-
-        if (selectedIndicators.length > 0) {
-            var selectedIdIndicator = [];
-            for (var i = 0; i < selectedIndicators.length; i++) {
-                selectedIdIndicator.push(selectedIndicators[i]);
-            }
-
-            $.each(selectedIdIndicator, function (index, indicatorId) {
-                if (indicatorId) {
-                    $.ajax({
-                        url: '/get-indicatorMatrik/' + indicatorId,
-                        type: "GET",
-                        dataType: "json",
-                        success: function (data) {
-                            $.each(data, function (key, data) {
-                                allMatrikData.push({ data: data });
-                            });
-
-                            if (index === selectedIdIndicator.length - 1) {
-                                fetchMatrik(allMatrikData);
-                            }
-                        },
-                        error: function (jqXHR, textStatus, errorThrown) {
-                            console.error("Error fetching indicator-matrik data:", textStatus, errorThrown);
-                        }
-                    });
-                }
-            });
-        } else {
-            displayMatrik([]);
+    if (selectedIndicators.length > 0) {
+        var selectedIdIndicator = [];
+        for (var i = 0; i < selectedIndicators.length; i++) {
+            selectedIdIndicator.push(selectedIndicators[i]);
         }
-        document.getElementById('selectedIdIndicator').value = JSON.stringify(selectedIdIndicator);
-    }
 
-    function fetchMatrik(allMatrikData) {
-        var finalMatrikData = [];
+        var ajaxRequests = selectedIdIndicator.map(function (indicatorId) {
+            return $.ajax({
+                url: '/get-indicatorMatrik/' + indicatorId,
+                type: "GET",
+                dataType: "json"
+            });
+        });
 
-        $.each(allMatrikData, function (index, indicatorMatrik) {
-            if (indicatorMatrik.data.id_matrik) {
-                $.ajax({
-                    url: '/get-matric/' + indicatorMatrik.data.id_matrik,
-                    type: "GET",
-                    dataType: "json",
-                    success: function (data) {
-                        finalMatrikData.push({ data: data });
-
-                        if (index === allMatrikData.length - 1) {
-                            displayMatrik(finalMatrikData);
-                        }
-                    },
-                    error: function (jqXHR, textStatus, errorThrown) {
-                        console.error("Error fetching matrik data:", textStatus, errorThrown);
-                    }
-                });
+        $.when.apply($, ajaxRequests).done(function () {
+            for (var i = 0; i < arguments.length; i++) {
+                var data = arguments[i][0];
+                allMatrikData = allMatrikData.concat(data);
             }
+            fetchMatrik(allMatrikData);
+        }).fail(function (jqXHR, textStatus, errorThrown) {
+            console.error("Error fetching indicator-matrik data:", textStatus, errorThrown);
         });
+    } else {
+        displayMatrik([]);
     }
 
-    function displayMatrik(finalMatrikData) {
-        $('#matrik').html('<option value="">Pilih Matrik</option>');
-        $('#matrik').prop('disabled', false);
+    document.getElementById('selectedIdIndicator').value = JSON.stringify(selectedIdIndicator);
+}
 
-        $.each(finalMatrikData, function (key, matrik) {
-            var option = $('<option>').val(matrik.data.id).text(matrik.data.name);
-            $('#matrik').append(option);
-        });
-    }
+function fetchMatrik(allMatrikData) {
+    var finalMatrikData = [];
 
+    var ajaxRequests = allMatrikData.map(function (indicatorMatrik) {
+        if (indicatorMatrik.id_matrik) {
+            return $.ajax({
+                url: '/get-matric/' + indicatorMatrik.id_matrik,
+                type: "GET",
+                dataType: "json"
+            });
+        }
+    });
 
+    $.when.apply($, ajaxRequests).done(function () {
+        for (var i = 0; i < arguments.length; i++) {
+            var data = arguments[i][0];
+            finalMatrikData.push(data);
+        }
+        displayMatrik(finalMatrikData);
+    }).fail(function (jqXHR, textStatus, errorThrown) {
+        console.error("Error fetching matrik data:", textStatus, errorThrown);
+    });
+}
+
+function displayMatrik(finalMatrikData) {
+    $('#matrik').html('<option value="">Pilih Matrik</option>');
+    $('#matrik').prop('disabled', false);
+
+    finalMatrikData.forEach(function (matrik) {
+        var option = $('<option>').val(matrik.id).text(matrik.name);
+        $('#matrik').append(option);
+    });
+}
 
 });
-

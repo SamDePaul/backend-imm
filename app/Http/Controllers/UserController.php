@@ -35,6 +35,11 @@ class UserController extends Controller
         return view('users.create', compact('user', 'countries'));
     }
 
+    public function getUserById($user_id)
+    {
+        $user = User::where('id', $user_id)->get();
+        return response()->json($user);
+    }
 
 
     public function store(Request $request)

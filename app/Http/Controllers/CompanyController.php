@@ -20,6 +20,18 @@ class CompanyController extends Controller
         return response()->json($companies);
     }
 
+    public function getCompanyById($company_id)
+    {
+        $companies = Company::where('id', $company_id)->get();
+        return response()->json($companies);
+    }
+
+    public function getCompanyByIdUser($user_id)
+    {
+        $companies = Company::where('user_id', $user_id)->get();
+        return response()->json($companies);
+    }
+
     public function create()
     {
         return view('companies.create');
@@ -106,7 +118,7 @@ class CompanyController extends Controller
         ]);
 
         Company::create([
-            'user_id' => Auth::id(), // Mengisi user_id dengan ID pengguna yang sedang login
+            'user_id' => $request->user_id, // Mengisi user_id dengan ID pengguna yang sedang login
             'nama_perusahaan' => $request->nama_perusahaan,
             'nama_pic' => $request->nama_pic,
             'posisi_pic' => $request->posisi_pic,

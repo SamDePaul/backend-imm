@@ -42,6 +42,8 @@ Route::get('/sdg', 'sdgController@getSdg')->name('sdg');
 Route::get('/tag', 'TagController@getTag')->name('tag');
 Route::get('/company', 'CompanyController@getCompany')->name('company');
 Route::post('/company', 'CompanyController@createCompany')->name('addcompany');
+Route::get('/company/{company_id}', 'CompanyController@getCompanyById')->name('getCompanyByID');
+Route::get('/company-user/{user_id}', 'CompanyController@getCompanyByIdUser')->name('getCompanyByIDUser');
 Route::post('/projects', 'ProjectsController@createProject')->name('addproject');
 Route::get('/get-metric-by-indicator/{indicator_id}', 'sdgController@getMatriksByIndicator');
 
@@ -49,6 +51,7 @@ Route::get('/get-metric-by-indicator/{indicator_id}', 'sdgController@getMatriksB
 
 Route::get('/user', 'UserController@getUser')->name('getUser');
 Route::get('/user/{email}', 'UserController@getUserByEmail')->name('getUserByEmail');
+Route::get('/user-id/{user_id}', 'UserController@getUserById')->name('getUserByID');
 
 
 Route::get('/projects', 'ProjectsController@getAllProjects');
