@@ -19,9 +19,16 @@ class CreateSurveysTable extends Migration
             $table->string('business_name');
             $table->string('survey_title');
             $table->text('survey_description')->nullable();
+            $table->string('nama_lengkap');
+            $table->string('email');
+            $table->string('no_hp');
+            $table->text('pertanyaan_1');
+            $table->text('pertanyaan_2');
+            $table->text('pertanyaan_3');
+            $table->text('pertanyaan_4');
+            $table->text('pertanyaan_5');
             $table->timestamps();
         });
-        
     }
 
     /**

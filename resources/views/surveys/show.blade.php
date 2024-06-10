@@ -20,6 +20,38 @@
                 <th>Survey Description</th>
                 <td>{{ $survey->survey_description }}</td>
             </tr>
+            <tr>
+                <th>Nama Lengkap</th>
+                <td>{{ $survey->nama_lengkap }}</td>
+            </tr>
+            <tr>
+                <th>Email</th>
+                <td>{{ $survey->email }}</td>
+            </tr>
+            <tr>
+                <th>No HP</th>
+                <td>{{ $survey->no_hp }}</td>
+            </tr>
+            <tr>
+                <th>Pertanyaan 1</th>
+                <td>{{ $survey->pertanyaan_1 }}</td>
+            </tr>
+            <tr>
+                <th>Pertanyaan 2</th>
+                <td>{{ $survey->pertanyaan_2 }}</td>
+            </tr>
+            <tr>
+                <th>Pertanyaan 3</th>
+                <td>{{ $survey->pertanyaan_3 }}</td>
+            </tr>
+            <tr>
+                <th>Pertanyaan 4</th>
+                <td>{{ $survey->pertanyaan_4 }}</td>
+            </tr>
+            <tr>
+                <th>Pertanyaan 5</th>
+                <td>{{ $survey->pertanyaan_5 }}</td>
+            </tr>
         </table>
         <a href="{{ route('surveys.index') }}" class="btn btn-primary">Back</a>
     </div>

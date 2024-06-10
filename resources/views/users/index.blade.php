@@ -20,6 +20,8 @@
             <th>Email</th>
             <th>Negara</th>
             <th>No Whatsapp</th>
+            <th>Role</th>
+            <th>Actions</th>
         </tr>
         </thead>
         <tbody>
@@ -31,6 +33,7 @@
                 <td>{{ $user->email }}</td>
                 <td>{{ $user->negara }}</td>
                 <td>{{ $user->no_hp }}</td>
+                <td>{{ $user->role }}</td>
                 <td>
                     <a href="{{ route('users.edit', $user->id) }}" class="btn btn-warning">Edit</a>
                     <button type="button" class="btn btn-danger delete-user" data-user-id="{{ $user->id }}" data-toggle="modal" data-target="#deleteUserModal-{{ $user->id }}">Delete</button>
