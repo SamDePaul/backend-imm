@@ -106,7 +106,7 @@ class CompanyController extends Controller
         ]);
 
         Company::create([
-            'user_id' => Auth::id(), // Mengisi user_id dengan ID pengguna yang sedang login
+            'user_id' => $request->user_id, // Mengisi user_id dengan ID pengguna yang sedang login
             'nama_perusahaan' => $request->nama_perusahaan,
             'nama_pic' => $request->nama_pic,
             'posisi_pic' => $request->posisi_pic,
