@@ -60,7 +60,7 @@ class Project extends Model
     // Define the relationship with the ProjectMetrics model
     public function projectMatrics()
     {
-        return $this->hasMany(ProjectMatrics::class, 'project_id');
+        return $this->hasMany(ProjectMatric::class, 'project_id');
     }
 }
 

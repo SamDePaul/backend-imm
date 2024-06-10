@@ -17,6 +17,6 @@ class Metric extends Model
     // Define the relationship with the ProjectMatrics model
     public function projectMatrics()
     {
-        return $this->hasMany(ProjectMatrics::class, 'matric_id');
+        return $this->hasMany(ProjectMatric::class, 'matric_id');
     }
 }
