@@ -26,6 +26,12 @@ class CompanyController extends Controller
         return response()->json($companies);
     }
 
+    public function getCompanyByIdUser($user_id)
+    {
+        $companies = Company::where('user_id', $user_id)->get();
+        return response()->json($companies);
+    }
+
     public function create()
     {
         return view('companies.create');
