@@ -47,6 +47,7 @@ Route::get('/get-cities/{region_id}', 'ProvinceController@getCities');
 
 Route::get('/get-indicator/{sdg_id}', 'sdgController@getIndicators');
 Route::get('/get-metric/{tag_id}', 'sdgController@getMatriks');
+Route::get('/get-metric-by-indicator/{indicator_id}', 'sdgController@getMatriksByIndicator');
 
 Route::get('/mailVerification', function () {
     return view('mailVerification');
