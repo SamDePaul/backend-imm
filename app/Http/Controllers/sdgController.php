@@ -67,7 +67,6 @@ class SdgController extends Controller
             $indicators = Indicator::where('sdg_id', $sdgs_id)->get();
             return response()->json($indicators);
         } catch (\Exception $e) {
-
             return response()->json(['error' => 'Internal Server Error'], 500);
         }
     }
@@ -136,7 +135,45 @@ class SdgController extends Controller
             $sdgs = sdg::all();
             return response()->json($sdgs);
         } catch (\Exception $e) {
+            \Log::error("Error retrieving provinces: " . $e->getMessage());
+            return response()->json(['error' => 'Internal Server Error'], 500);
+        }
+    }
 
+    public function getIndicatorsByIdSdg($sdgs_id)
+    {
+        \Log::info("Received sdgs_id: $sdgs_id");
+        try {
+            $indicators = Indicator::where('sdg_id', $sdgs_id)->get();
+            return response()->json($indicators);
+        } catch (\Exception $e) {
+            \Log::error("Error retrieving provinces: " . $e->getMessage());
+            return response()->json(['error' => 'Internal Server Error'], 500);
+        }
+    }
+
+    public function getMatricsByIdIndicator($indicator_id)
+    {
+        \Log::info("Received indicator_id: $indicator_id");
+        try {
+            $matrikIndicators = MetricIndicator::where('indicator_id', $indicator_id)->get();
+
+            if ($matrikIndicators) {
+                $matriks = [];
+                foreach ($matrikIndicators as $matrikIndicator) {
+                    $metric_id = $matrikIndicator->metric_id;
+
+                    $matrik = Metric::find($metric_id);
+                    if ($matrik) {
+                        $matriks[] = $matrik; // Add the retrieved Metric to the array
+
+                    } else {
+
+                    }
+                }
+                return response()->json($matriks);
+        } catch (\Exception $e) {
+            \Log::error("Error retrieving provinces: " . $e->getMessage());
             return response()->json(['error' => 'Internal Server Error'], 500);
         }
     }

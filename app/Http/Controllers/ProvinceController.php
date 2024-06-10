@@ -12,9 +12,10 @@ class ProvinceController extends Controller
     public function getCountries()
     {
         try {
-            $Countries = Country::all()->get();
+            $Countries = Country::all();
             return response()->json($Countries);
         } catch (\Exception $e) {
+            \Log::error("Error retrieving provinces: " . $e->getMessage());
             return response()->json(['error' => 'Internal Server Error'], 500);
         }
     }
