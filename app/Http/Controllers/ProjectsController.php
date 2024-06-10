@@ -7,6 +7,8 @@ use App\Models\Project;
 use App\Models\Tag;
 use App\Models\Country;
 use App\Models\Sdg;
+use App\Models\ProjectMatric;
+
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Http\RedirectResponse;
 
@@ -195,12 +197,12 @@ class ProjectsController extends Controller
             'deskripsi' => 'required|string',
             'tujuan' => 'required|string',
             'targetPelanggan' => 'required|string',
-            'tanggalMulai' => 'required',
-            'tanggalSelesai' => 'required',
+            'tanggalMulai' => 'required|date',
+            'tanggalSelesai' => 'required|date',
             'negara' => 'required|numeric',
             'provinsi' => 'required|numeric',
             'kota' => 'required|numeric',
-            'data_path' => 'required|string',
+            'data_path' => 'required|file', // Assuming this is a file upload
             'kategori' => 'required|string',
             'dana' => 'required|numeric',
             'jenis_dana' => 'required|string',
@@ -210,10 +212,10 @@ class ProjectsController extends Controller
             'matrik' => 'required|numeric',
         ]);
 
-        $path = $request->file('data_path');
+        $path = $request->file('data_path')->store('data_files');
 
         $project = Project::create([
-            'user_id' => auth()->id(), // Mengisikan user ID secara otomatis
+            'user_id' => $request->user_id,
             'tag_id' => $request->tags,
             'judul' => $request->judul,
             'deskripsi' => $request->deskripsi,
@@ -230,12 +232,31 @@ class ProjectsController extends Controller
             'dana_lain' => $request->dana_lain,
             'sdg_id' => $request->sdg,
             'indikator_id' => $request->indikator,
-            'matrik_id' => $request->matrik,
             'data_path' => $path,
+        ]);
+
+        // Save to ProjectMatrics table
+        ProjectMatric::create([
+            'matric_id' => $request->matrik,
+            'project_id' => $project->id,
+            'value' => 0, // Assuming value is 0 initially or you can get from request
         ]);
 
         return response()->json([
             'project' => $project,
+        ]);
+    }
+
+    public function getProjectByMatricId($matricId)
+    {
+        $projectMatric = ProjectMatric::with('project')->where('matric_id', $matricId)->first();
+
+        if (!$projectMatric) {
+            return response()->json(['error' => 'ProjectMatric not found'], 404);
+        }
+
+        return response()->json([
+            'project' => $projectMatric->project,
         ]);
     }
 }

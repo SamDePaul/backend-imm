@@ -10,6 +10,13 @@ class Metric extends Model
     use HasFactory;
 
     protected $fillable = [
-        'indicator_order', 'value'
+        'indicator_order',
+        'value'
     ];
+
+    // Define the relationship with the ProjectMatrics model
+    public function projectMatrics()
+    {
+        return $this->hasMany(ProjectMatrics::class, 'matric_id');
+    }
 }

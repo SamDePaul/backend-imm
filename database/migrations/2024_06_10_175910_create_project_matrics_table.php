@@ -15,10 +15,14 @@ class CreateProjectMatricsTable extends Migration
     {
         Schema::create('project_matrics', function (Blueprint $table) {
             $table->id();
-            $table->bigInteger('matric_id');
-            $table->bigInteger('project_id');
+            $table->bigInteger('matric_id')->unsigned();
+            $table->bigInteger('project_id')->unsigned();
             $table->bigInteger('value');
             $table->timestamps();
+
+            // Add foreign key constraints
+            $table->foreign('matric_id')->references('id')->on('metrics')->onDelete('cascade');
+            $table->foreign('project_id')->references('id')->on('projects')->onDelete('cascade');
         });
     }
 

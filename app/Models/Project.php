@@ -13,7 +13,7 @@ class Project extends Model
         'user_id',
         'tag_id',
         'judul',
-        'deskripsi', 
+        'deskripsi',
         'tujuan',
         'targetPelanggan',
         'tanggalMulai',
@@ -47,14 +47,20 @@ class Project extends Model
     }
 
     public function index()
-{
-    $projects = Project::with('country')->get(); // Pastikan memuat relasi country
-    return view('projects.index', compact('projects'));
-}
+    {
+        $projects = Project::with('country')->get(); // Pastikan memuat relasi country
+        return view('projects.index', compact('projects'));
+    }
 
-public function user()
-{
-    return $this->belongsTo(User::class);
-}
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
+
+    // Define the relationship with the ProjectMetrics model
+    public function projectMatrics()
+    {
+        return $this->hasMany(ProjectMatrics::class, 'project_id');
+    }
 }
 
