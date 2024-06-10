@@ -56,6 +56,7 @@ Route::get('/user-id/{user_id}', 'UserController@getUserById')->name('getUserByI
 Route::post('/add-project', 'ProjectsController@createProject');
 Route::get('/projects', 'ProjectsController@getAllProjects');
 Route::get('/projects/{id}', 'ProjectsController@getProject');
+Route::put('/update-projects/{id}', 'ProjectsController@updateProject');
 
 Route::post('/otp', 'ImmProfileController@GetloginOtp');
 Route::post('/otp-verification', 'ImmProfileController@VerifyOtp');

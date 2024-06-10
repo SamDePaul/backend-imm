@@ -186,9 +186,7 @@ class ProjectsController extends Controller
     {
         $projects = Project::all();
 
-        return response()->json([
-            'projects' => $projects,
-        ]);
+        return response()->json($projects);
     }
 
     // Return a specific project by ID as JSON.
@@ -196,9 +194,7 @@ class ProjectsController extends Controller
     {
         $project = Project::findOrFail($id);
 
-        return response()->json([
-            'project' => $project,
-        ]);
+        return response()->json($project);
     }
 
     // Create a new project via API request.
@@ -232,7 +228,7 @@ class ProjectsController extends Controller
         try {
             $path = $request->file('data_path')->store('data_files', 'public');
             \Log::info('File stored at path:', ['path' => $path]);
-    
+
             $project = Project::create([
                 'user_id' => $request->user_id,
                 'tag_id' => $request->tag_id,
@@ -261,10 +257,88 @@ class ProjectsController extends Controller
             ]);
 
             return response()->json(['success' => 'Project created successfully.']);
-    
+
         } catch (\Exception $e) {
             \Log::error('Error creating project:', ['error' => $e->getMessage()]);
             return response()->json(['error' => 'Failed to create project'], 500);
+        }
+    }
+
+    // Update an existing project via API request.
+    public function updateProject(Request $request, $id)
+    {
+        \Log::info($request);
+        $validatedData = $request->validate([
+            'user_id' => 'required',
+            'tag_id' => 'required',
+            'judul' => 'required',
+            'deskripsi' => 'required',
+            'tujuan' => 'required',
+            'targetPelanggan' => 'required',
+            'tanggalMulai' => 'required',
+            'tanggalSelesai' => 'required',
+            'negara_id' => 'required',
+            'provinsi_id' => 'required',
+            'kota_id' => 'required',
+            'data_path' => 'sometimes', // Optional file upload
+            'kategori' => 'required',
+            'dana' => 'required',
+            'jenis_dana' => 'required',
+            'dana_lain' => 'required',
+            'sdg_id' => 'required',
+            'indikator_id' => 'required',
+            'matrik_id' => 'required',
+            'value' => 'required', // Adding validation for value
+        ]);
+
+        \Log::info('Validated data:', $validatedData);
+
+        try {
+            $project = Project::findOrFail($id);
+
+            // Store the new file if uploaded
+            if ($request->hasFile('data_path')) {
+                $path = $request->file('data_path')->store('data_files', 'public');
+                \Log::info('File stored at path:', ['path' => $path]);
+            } else {
+                $path = $project->data_path; // Use the existing path if no new file is uploaded
+            }
+
+            $project->update([
+                'user_id' => $request->user_id,
+                'tag_id' => $request->tag_id,
+                'judul' => $request->judul,
+                'deskripsi' => $request->deskripsi,
+                'tujuan' => $request->tujuan,
+                'targetPelanggan' => $request->targetPelanggan,
+                'tanggalMulai' => $request->tanggalMulai,
+                'tanggalSelesai' => $request->tanggalSelesai,
+                'negara_id' => $request->negara_id,
+                'provinsi_id' => $request->provinsi_id,
+                'kota_id' => $request->kota_id,
+                'data_path' => $path,
+                'kategori' => $request->kategori,
+                'dana' => $request->dana,
+                'jenis_dana' => $request->jenis_dana,
+                'dana_lain' => $request->dana_lain,
+                'sdg_id' => $request->sdg_id,
+                'indikator_id' => $request->indikator_id,
+                'matrik_id' => $request->matrik_id,
+            ]);
+
+            $projectMatric = ProjectMatric::where('project_id', $id)->first();
+            if ($projectMatric) {
+                $projectMatric->update([
+                    'matric_id' => $request->matrik_id,
+                    'value' => $request->value, // Update value with input from request
+                ]);
+            }
+
+            return response()->json(['success' => 'Project updated successfully.']);
+
+        } catch (\Exception $e) {
+            \Log::error('Error updating project:', ['error' => $e->getMessage()]);
+            return response()->json(['error' => 'Failed to update project'], 500);
         }
     }
 
