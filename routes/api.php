@@ -47,7 +47,7 @@ Route::get('/company-user/{user_id}', 'CompanyController@getCompanyByIdUser')->n
 Route::post('/projects', 'ProjectsController@createProject')->name('addproject');
 
 
-Route::get('/get-metric-by-indicator/{indicator_id}', 'sdgController@getMatriksByIndicator');
+
 
 Route::get('/user', 'UserController@getUser')->name('getUser');
 Route::get('/user/{email}', 'UserController@getUserByEmail')->name('getUserByEmail');
@@ -75,4 +75,6 @@ Route::get('/get-regions/{country_id}', 'ProvinceController@getRegions');
 Route::get('/get-cities/{region_id}', 'ProvinceController@getCities');
 Route::get('/get-countries', 'ProvinceController@getCountries');
 
-
+Route::get('/get-sdg', 'sdgController@getSdg');
+Route::get('/get-indicators/{sdg_id}', 'sdgController@getIndicatorsByIdSdg');
+Route::get('/get-metrics/{indicator_id}', 'sdgController@getMatriksByIndicator');

@@ -86,11 +86,9 @@ class SdgController extends Controller
                         $matriks[] = $matrik; // Add the retrieved Metric to the array
 
                     } else {
-
                     }
                 }
                 return response()->json($matriks);
-
             } else {
                 // Handle the case where no tag is found
             }
@@ -115,11 +113,9 @@ class SdgController extends Controller
                         $matriks[] = $matrik; // Add the retrieved Metric to the array
 
                     } else {
-
                     }
                 }
                 return response()->json($matriks);
-
             } else {
                 // Handle the case where no tag is found
             }
@@ -168,11 +164,10 @@ class SdgController extends Controller
                         $matriks[] = $matrik; // Add the retrieved Metric to the array
 
                     } else {
-
                     }
                 }
             }
-                return response()->json($matriks);
+            return response()->json($matriks);
         } catch (\Exception $e) {
             \Log::error("Error retrieving provinces: " . $e->getMessage());
             return response()->json(['error' => 'Internal Server Error'], 500);
