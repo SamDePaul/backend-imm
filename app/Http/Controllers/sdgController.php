@@ -171,6 +171,7 @@ class SdgController extends Controller
 
                     }
                 }
+            }
                 return response()->json($matriks);
         } catch (\Exception $e) {
             \Log::error("Error retrieving provinces: " . $e->getMessage());
