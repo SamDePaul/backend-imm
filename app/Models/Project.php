@@ -15,6 +15,7 @@ class Project extends Model
         'judul',
         'deskripsi', 
         'tujuan',
+        'targetPelanggan',
         'tanggalMulai',
         'tanggalSelesai',
         'negara_id',

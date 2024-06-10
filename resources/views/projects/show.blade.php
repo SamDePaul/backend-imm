@@ -8,6 +8,8 @@
             <h4>{{ $project->judul }}</h4>
             <p>{{ $project->deskripsi }}</p>
             <p><strong>{{ __('Propose:') }}</strong> {{ $project->tujuan }}</p>
+            <p><strong>{{ __('Target Customer:') }}</strong> {{ $project->targetPelanggan }}</p>
+            <p><strong>{{ __('User:') }}</strong> {{ $project->user->email }}</p>
             <p><strong>{{ __('Start Date:') }}</strong> {{ $project->tanggalMulai }}</p>
             <p><strong>{{ __('End Date:') }}</strong> {{ $project->tanggalSelesai }}</p>
             <p><strong>{{ __('Country:') }}</strong> {{ $project->country->name }}</p>
