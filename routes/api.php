@@ -43,6 +43,7 @@ Route::get('/tag', 'TagController@getTag')->name('tag');
 Route::get('/company', 'CompanyController@getCompany')->name('company');
 Route::post('/company', 'CompanyController@createCompany')->name('addcompany');
 Route::post('/projects', 'ProjectsController@createProject')->name('addproject');
+Route::get('/get-metric-by-indicator/{indicator_id}', 'sdgController@getMatriksByIndicator');
 
 Route::get('/user', 'UserController@getUser')->name('getUser');
 Route::get('/user/{email}', 'UserController@getUserByEmail')->name('getUserByEmail');
@@ -64,5 +65,5 @@ Route::post('blogs/{blog}/comments', 'CommentController@createComment');
 Route::put('comments/{comment}', 'CommentController@editComment');
 Route::delete('comments/{comment}', 'CommentController@deleteF');
 
-    
+
 

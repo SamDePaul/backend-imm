@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Sdg;
 use App\Models\Indicator;
 use App\Models\MetricTag;
+use App\Models\MetricIndicator;
 use App\Models\Metric;
 use Illuminate\Http\Request;
 
@@ -80,6 +81,35 @@ class SdgController extends Controller
                 $matriks = [];
                 foreach ($matrikTags as $matrikTag) {
                     $metric_id = $matrikTag->metric_id;
+
+                    $matrik = Metric::find($metric_id);
+                    if ($matrik) {
+                        $matriks[] = $matrik; // Add the retrieved Metric to the array
+
+                    } else {
+
+                    }
+                }
+                return response()->json($matriks);
+
+            } else {
+                // Handle the case where no tag is found
+            }
+        } catch (\Exception $e) {
+
+            return response()->json(['error' => 'Internal Server Error'], 500);
+        }
+    }
+
+    public function getMatriksByIndicator($indicator_id)
+    {
+        try {
+            $matrikIndicators = MetricIndicator::where('indicator_id', $indicator_id)->get();
+
+            if ($matrikIndicators) {
+                $matriks = [];
+                foreach ($matrikIndicators as $matrikIndicator) {
+                    $metric_id = $matrikIndicator->metric_id;
 
                     $matrik = Metric::find($metric_id);
                     if ($matrik) {
