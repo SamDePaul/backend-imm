@@ -82,6 +82,13 @@
                     <span>{{ __('Project') }}</span>
                 </a>
             </li>
+            
+            <!-- Nav Item - Project Report -->
+            <li class="nav-item {{ Nav::isRoute('project_reports.index') }}">
+                <a class="nav-link" href="{{ route('project_reports.index') }}">
+                    <i class="fa-solid fa-file-alt"></i>
+                    <span>{{ __('Project Report') }}</span>
+                </a>
 
             <!-- Nav Item - Blog -->
             <li class="nav-item {{ Nav::isRoute('blogs.index') }}">

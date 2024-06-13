@@ -67,6 +67,10 @@ Route::resource('surveys', SurveyController::class);
 Route::resource('surveys.questions', QuestionController::class)->except(['index', 'show']);
 Route::post('surveys/{survey}/responses', [ResponseController::class, 'store'])->name('responses.store');
 
+//Project Report
+Route::resource('project_reports', ProjectReportController::class);
+Route::get('project_reports/chart/{project}', [ProjectReportController::class, 'showChart'])->name('project_reports.chart');
+
 
 
 
