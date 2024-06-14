@@ -7,6 +7,7 @@ use App\Models\Indicator;
 use App\Models\MetricTag;
 use App\Models\MetricIndicator;
 use App\Models\Metric;
+use App\Models\Tag;
 use Illuminate\Http\Request;
 
 class SdgController extends Controller
@@ -168,6 +169,54 @@ class SdgController extends Controller
                 }
             }
             return response()->json($matriks);
+        } catch (\Exception $e) {
+            \Log::error("Error retrieving provinces: " . $e->getMessage());
+            return response()->json(['error' => 'Internal Server Error'], 500);
+        }
+    }
+
+    public function getTagById($tag_id)
+    {
+        \Log::info("Received tag_id: $tag_id");
+        try {
+            $tags = Tag::where('id', $tag_id)->get();
+            return response()->json($tags);
+        } catch (\Exception $e) {
+            \Log::error("Error retrieving provinces: " . $e->getMessage());
+            return response()->json(['error' => 'Internal Server Error'], 500);
+        }
+    }
+
+    public function getSdgById($sdg_id)
+    {
+        \Log::info("Received sdg_id: $sdg_id");
+        try {
+            $sdgs = Sdg::where('id', $sdg_id)->get();
+            return response()->json($sdgs);
+        } catch (\Exception $e) {
+            \Log::error("Error retrieving provinces: " . $e->getMessage());
+            return response()->json(['error' => 'Internal Server Error'], 500);
+        }
+    }
+
+    public function getIndicatorsById($indicator_id)
+    {
+        \Log::info("Received indicator_id: $indicator_id");
+        try {
+            $indicators = Indicator::where('id', $indicator_id)->get();
+            return response()->json($indicators);
+        } catch (\Exception $e) {
+            \Log::error("Error retrieving provinces: " . $e->getMessage());
+            return response()->json(['error' => 'Internal Server Error'], 500);
+        }
+    }
+
+    public function getMatricById($matric_id)
+    {
+        \Log::info("Received matrics_id: $matric_id");
+        try {
+            $metrics = Metric::where('id', $matric_id)->get();
+            return response()->json($metrics);
         } catch (\Exception $e) {
             \Log::error("Error retrieving provinces: " . $e->getMessage());
             return response()->json(['error' => 'Internal Server Error'], 500);

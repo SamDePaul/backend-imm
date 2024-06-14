@@ -43,6 +43,42 @@ class ProvinceController extends Controller
             return response()->json(['error' => 'Internal Server Error'], 500);
         }
     }
+
+    public function getCountryById($id)
+    {
+        \Log::info("Received country_id: $id");
+        try {
+            $country = Country::where('id', $id)->get();
+            return response()->json($country);
+        } catch (\Exception $e) {
+            \Log::error("Error retrieving country: " . $e->getMessage());
+            return response()->json(['error' => 'Internal Server Error'], 500);
+        }
+    }
+
+    public function getRegionById($region_id)
+    {
+        \Log::info("Received region_id: $region_id");
+        try {
+            $states = State::where('id', $region_id)->get();
+            return response()->json($states);
+        } catch (\Exception $e) {
+            \Log::error("Error retrieving provinces: " . $e->getMessage());
+            return response()->json(['error' => 'Internal Server Error'], 500);
+        }
+    }
+
+    public function getCityById($city_id)
+    {
+        \Log::info("Received city_id: $city_id");
+        try {
+            $cities = City::where('id', $city_id)->get();
+            return response()->json($cities);
+        } catch (\Exception $e) {
+            \Log::error("Error retrieving provinces: " . $e->getMessage());
+            return response()->json(['error' => 'Internal Server Error'], 500);
+        }
+    }
 }
 
 

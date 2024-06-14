@@ -79,3 +79,12 @@ Route::get('/get-countries', 'ProvinceController@getCountries');
 Route::get('/get-sdg', 'sdgController@getSdg');
 Route::get('/get-indicators/{sdg_id}', 'sdgController@getIndicatorsByIdSdg');
 Route::get('/get-metrics/{indicator_id}', 'sdgController@getMatriksByIndicator');
+
+Route::get('/get-tagId/{tag_id}', 'sdgController@getTagById');
+Route::get('/get-sdgId/{sdg_id}', 'sdgController@getSdgById');
+Route::get('/get-indicatorId/{indicator_id}', 'sdgController@getIndicatorsById');
+Route::get('/get-matricId/{matric_id}', 'sdgController@getMatricById');
+
+Route::get('/get-regionId/{region_id}', 'ProvinceController@getRegionById');
+Route::get('/get-cityId/{city_id}', 'ProvinceController@getCityById');
+Route::get('/get-countryId/{country_id}', 'ProvinceController@getCountryById');
